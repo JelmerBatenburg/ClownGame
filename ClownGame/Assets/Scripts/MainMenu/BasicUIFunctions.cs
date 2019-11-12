@@ -14,6 +14,8 @@ public class BasicUIFunctions : MonoBehaviour
     [Header("ChangeColor")]
     public Color highlightedColor;
     public Color nonHighlightedColor;
+    [Header("SliderValueDisplay")]
+    public Text displayText;
 
     public void FromToButton()
     {
@@ -42,5 +44,15 @@ public class BasicUIFunctions : MonoBehaviour
     public void DeHighlightColor(GameObject obj)
     {
         obj.GetComponent<Image>().color = nonHighlightedColor;
+    }
+
+    public void ExitGameButton()
+    {
+        Application.Quit();
+    }
+
+    public void SliderChangeDisplay(float value)
+    {
+        displayText.text = value.ToString();
     }
 }
