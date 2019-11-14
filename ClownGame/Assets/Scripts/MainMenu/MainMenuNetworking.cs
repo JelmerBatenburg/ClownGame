@@ -88,6 +88,12 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     [PunRPC,HideInInspector]
     public void AskReadyInfo()
     {
+        StartCoroutine(DelayedReturnInfo());
+    }
+
+    public IEnumerator DelayedReturnInfo()
+    {
+        yield return null;
         List<bool> readyInfo = new List<bool>();
         foreach (PlayerReadyInfo player in playersInformation)
             readyInfo.Add(player.isReady);
