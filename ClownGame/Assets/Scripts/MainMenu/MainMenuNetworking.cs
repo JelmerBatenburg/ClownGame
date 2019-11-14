@@ -81,8 +81,6 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         foreach (Transform child in playerPanelLayout)
             Destroy(child.gameObject);
         StartCoroutine(DisplayPlayers());
-        if (!PhotonNetwork.isMasterClient)
-            photonView.RPC("AskReadyInfo", PhotonTargets.MasterClient);
     }
 
 
@@ -167,12 +165,16 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         StartCoroutine(DisplayPlayers());
     }
 
-    [PunRPC,HideInInspector]
+    [PunRPC, HideInInspector]
     public void SendReadyPLayerInformation(bool[] readyPlayerInfo)
     {
         for (int i = 0; i < playersInformation.Count; i++)
             playersInformation[i].isReady = readyPlayerInfo[i];
-        DisplayPlayers();
+
+        foreach (PhotonPlayer player in PhotonNetwork.playerList)
+            for (int i = 0; i < playersInformation.Count; i++)
+                if (playersInformation[i].player.NickName == player.NickName)
+                    playersInformation[i].panel.DisplayInfo(playersInformation[i].isReady, player.NickName, 0);
     }
 
     [System.Serializable]
