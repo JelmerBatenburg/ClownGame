@@ -85,19 +85,19 @@ public class MainMenuNetworking : Photon.MonoBehaviour
             photonView.RPC("AskReadyInfo", PhotonTargets.MasterClient);
     }
 
+
     [PunRPC,HideInInspector]
     public void AskReadyInfo()
     {
-        StartCoroutine(DelayedReturnInfo());
+        List<bool> readyInfo = new List<bool>();
+        foreach (PlayerReadyInfo player in playersInformation)
+            readyInfo.Add(player.isReady);
+        photonView.RPC("SendReadyPLayerInformation", PhotonTargets.All, readyInfo.ToArray());
     }
 
     public IEnumerator DelayedReturnInfo()
     {
         yield return null;
-        List<bool> readyInfo = new List<bool>();
-        foreach (PlayerReadyInfo player in playersInformation)
-            readyInfo.Add(player.isReady);
-        photonView.RPC("SendReadyPLayerInformation", PhotonTargets.All, readyInfo.ToArray());
     }
 
     public void OnReceivedRoomListUpdate()
@@ -172,6 +172,7 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     {
         for (int i = 0; i < playersInformation.Count; i++)
             playersInformation[i].isReady = readyPlayerInfo[i];
+        DisplayPlayers();
     }
 
     [System.Serializable]
