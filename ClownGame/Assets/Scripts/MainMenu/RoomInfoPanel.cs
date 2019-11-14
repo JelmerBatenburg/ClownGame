@@ -12,6 +12,7 @@ public class RoomInfoPanel : MonoBehaviour
 
     public void SetInformation(string roomName,int players, int maxPlayers, int _roomIndex,MainMenuNetworking _networking)
     {
+        networking = _networking;
         roomNameInput.text = roomName;
         playerAmountInput.text = players.ToString() + "/" + maxPlayers.ToString() + " Players";
         roomIndex = _roomIndex;
