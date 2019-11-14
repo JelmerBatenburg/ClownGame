@@ -14,10 +14,34 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     [Header("CreateRoom")]
     public InputField nameInput;
     public Slider slider;
-    [Header("RoomInformation")]
+    [Header("CurrentRoomInformation")]
     public Transform playerPanelLayout;
     public GameObject playerPanel;
     public List<PlayerReadyInfo> playersInformation = new List<PlayerReadyInfo>();
+    [Header("Rooms")]
+    public Transform roomPanelLayout;
+    public GameObject roomPanel;
+    public GameObject roomsUIObject, roomUI;
+
+    public void LoadRoom(int roomIndex)
+    {
+        roomsUIObject.SetActive(false);
+        roomUI.SetActive(true);
+        PhotonNetwork.JoinRoom(rooms[roomIndex].Name);
+    }
+
+    public void DisplayAvailableRooms()
+    {
+        foreach (Transform child in roomPanelLayout)
+            Destroy(child);
+
+        for (int i = 0; i < rooms.Length; i++)
+            if(rooms[i].MaxPlayers != rooms[i].PlayerCount)
+            {
+                GameObject g = Instantiate(roomPanel, roomPanelLayout);
+                g.GetComponent<RoomInfoPanel>().SetInformation(rooms[i].Name, rooms[i].PlayerCount, rooms[i].MaxPlayers, i, this);
+            }
+    }
 
     public IEnumerator DisplayPlayers()
     {
@@ -54,6 +78,8 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     public void OnReceivedRoomListUpdate()
     {
         rooms = PhotonNetwork.GetRoomList();
+        if (roomPanelLayout.gameObject.activeInHierarchy)
+            DisplayAvailableRooms();
     }
 
     public void ConnectToPhoton()
