@@ -56,7 +56,10 @@ public class MainMenuNetworking : Photon.MonoBehaviour
             bool found = false;
             for (int i = 0; i < playersInformation.Count; i++)
                 if (playersInformation[i].player.NickName == player.NickName)
+                {
+                    playersInformation[i].panel.DisplayInfo(playersInformation[i].isReady, player.NickName, 0);
                     found = true;
+                }
             if (!found)
             {
                 GameObject g = Instantiate(playerPanel, playerPanelLayout);
@@ -78,6 +81,13 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         foreach (Transform child in playerPanelLayout)
             Destroy(child.gameObject);
         StartCoroutine(DisplayPlayers());
+        if (PhotonNetwork.isMasterClient)
+        {
+            List<bool> readyInfo = new List<bool>();
+            foreach (PlayerReadyInfo player in playersInformation)
+                readyInfo.Add(player.isReady);
+            photonView.RPC("SendReadyPLayerInformation", PhotonTargets.All, readyInfo.ToArray());
+        }
     }
 
     public void OnReceivedRoomListUpdate()
@@ -128,6 +138,33 @@ public class MainMenuNetworking : Photon.MonoBehaviour
             Debug.Log("Roomname is taken");
     }
 
+    public void SetReady()
+    {
+        foreach (PlayerReadyInfo player in playersInformation)
+            if (player.player.NickName == PhotonNetwork.player.NickName)
+            {
+                photonView.RPC("SetAPlayerReady", PhotonTargets.All, !player.isReady, PhotonNetwork.player.NickName);
+                break;
+            }
+    }
+
+    [PunRPC,HideInInspector]
+    public void SetAPlayerReady(bool ready, string playerName)
+    {
+        foreach (PlayerReadyInfo player in playersInformation)
+            if (player.player.NickName == playerName)
+                player.isReady = ready;
+        StartCoroutine(DisplayPlayers());
+    }
+
+    [PunRPC,HideInInspector]
+    public void SendReadyPLayerInformation(bool[] readyPlayerInfo)
+    {
+        for (int i = 0; i < playersInformation.Count; i++)
+            playersInformation[i].isReady = readyPlayerInfo[i];
+    }
+
+    [System.Serializable]
     public class PlayerReadyInfo
     {
         public PhotonPlayer player;
