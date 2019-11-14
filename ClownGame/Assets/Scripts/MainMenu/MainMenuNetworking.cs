@@ -23,6 +23,11 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     public GameObject roomPanel;
     public GameObject roomsUIObject, roomUI;
 
+    public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
+    {
+        DisplayPlayers();
+    }
+
     public void LoadRoom(int roomIndex)
     {
         roomsUIObject.SetActive(false);
