@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainMenuNetworking : Photon.MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     public Transform roomPanelLayout;
     public GameObject roomPanel;
     public GameObject roomsUIObject, roomUI;
+    [Header("Scenes")]
+    public string gameScene;
 
     public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
@@ -81,8 +84,9 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         foreach (Transform child in playerPanelLayout)
             Destroy(child.gameObject);
         StartCoroutine(DisplayPlayers());
+        if (!PhotonNetwork.isMasterClient)
+            photonView.RPC("AskReadyInfo", PhotonTargets.MasterClient);
     }
-
 
     [PunRPC,HideInInspector]
     public void AskReadyInfo()
@@ -154,6 +158,21 @@ public class MainMenuNetworking : Photon.MonoBehaviour
                 photonView.RPC("SetAPlayerReady", PhotonTargets.All, !player.isReady, PhotonNetwork.player.NickName);
                 break;
             }
+        if (PhotonNetwork.isMasterClient)
+            CheckIfEveryoneIsReady();
+    }
+
+    public void CheckIfEveryoneIsReady()
+    {
+        bool everyoneIsReady = true;
+        foreach (PlayerReadyInfo player in playersInformation)
+            if (!player.isReady)
+            {
+                everyoneIsReady = false;
+                break;
+            }
+        if (everyoneIsReady)
+            PhotonNetwork.LoadLevelAsync(gameScene);
     }
 
     [PunRPC,HideInInspector]
@@ -165,16 +184,13 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         StartCoroutine(DisplayPlayers());
     }
 
-    [PunRPC, HideInInspector]
+    [PunRPC,HideInInspector]
     public void SendReadyPLayerInformation(bool[] readyPlayerInfo)
     {
+        DisplayPlayers();
         for (int i = 0; i < playersInformation.Count; i++)
             playersInformation[i].isReady = readyPlayerInfo[i];
-
-        foreach (PhotonPlayer player in PhotonNetwork.playerList)
-            for (int i = 0; i < playersInformation.Count; i++)
-                if (playersInformation[i].player.NickName == player.NickName)
-                    playersInformation[i].panel.DisplayInfo(playersInformation[i].isReady, player.NickName, 0);
+        DisplayPlayers();
     }
 
     [System.Serializable]
