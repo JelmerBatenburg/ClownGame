@@ -25,7 +25,7 @@ public class MainMenuNetworking : Photon.MonoBehaviour
 
     public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
-        DisplayPlayers();
+        StartCoroutine(DisplayPlayers());
     }
 
     public void LoadRoom(int roomIndex)
