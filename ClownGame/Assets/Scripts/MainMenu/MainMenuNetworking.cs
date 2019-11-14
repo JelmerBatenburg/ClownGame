@@ -81,13 +81,13 @@ public class MainMenuNetworking : Photon.MonoBehaviour
         foreach (Transform child in playerPanelLayout)
             Destroy(child.gameObject);
         StartCoroutine(DisplayPlayers());
-        if (PhotonNetwork.isMasterClient)
-            StartCoroutine(DelayedReadyInfoSerialization());
+        if (!PhotonNetwork.isMasterClient)
+            photonView.RPC("AskReadyInfo", PhotonTargets.MasterClient);
     }
 
-    public IEnumerator DelayedReadyInfoSerialization()
+    [PunRPC,HideInInspector]
+    public void AskReadyInfo()
     {
-        yield return null;
         List<bool> readyInfo = new List<bool>();
         foreach (PlayerReadyInfo player in playersInformation)
             readyInfo.Add(player.isReady);

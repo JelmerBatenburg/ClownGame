@@ -39,4 +39,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - SetAPlayerReady
   - SendReadyPLayerInformation
+  - AskReadyInfo
   DisableAutoOpenWizard: 1
