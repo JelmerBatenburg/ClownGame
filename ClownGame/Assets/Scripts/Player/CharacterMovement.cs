@@ -33,6 +33,7 @@ public class CharacterMovement : MonoBehaviour
     {
         weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (rig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
         weapon.position = Vector3.Lerp(weapon.position, weapon.parent.position, Time.deltaTime * weaponLerpSpeed);
+        weapon.rotation = Quaternion.Lerp(weapon.rotation, weapon.parent.rotation, Time.deltaTime * weaponLerpSpeed);
     }
 
     public void Rotate()

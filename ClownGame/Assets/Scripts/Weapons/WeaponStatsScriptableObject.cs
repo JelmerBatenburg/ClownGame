@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "WeaponStats",menuName = "WeaponStats")]
 public class WeaponStatsScriptableObject : ScriptableObject
 {
     [Header("BaseSettings")]
@@ -12,13 +13,19 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public float damage = 1;
     public float fireRate = 0.4f;
     public float accuracy = 0.15f;
-    public float recoil = 1;
-    public float clipSize = 16;
-    public float maxAmmoPouchSize = 160;
+    public float horizontalRotationRecoil = 1;
+    public float backwardsRecoil = 1;
+    public int clipSize = 16;
+    public int maxAmmoPouchSize = 160;
     public float reloadSpeed;
     public int projectileAmount = 1;
 
+    [Header("BurstFireStats")]
+    public float burstFireDelay;
+    public int burstRounds;
+
     [Header("RaycastShooting")]
+    public float raycastFireLength;
     public bool piercing;
     public float bulletHealth;
     public bool explodingBullets;
@@ -34,7 +41,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     {
         auto,
         singleFire,
-        Burst
+        burst
     }
 
     public enum ProjectileType

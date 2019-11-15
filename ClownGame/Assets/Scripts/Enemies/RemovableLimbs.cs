@@ -5,7 +5,19 @@ using UnityEngine;
 public class RemovableLimbs : MonoBehaviour
 {
     public RemovableLimbInformation[] removableLimbs;
+    public List<Rigidbody> ragdollBones;
     public float health;
+
+    public void Start()
+    {
+        ToggleRagdoll(false);
+    }
+
+    public void ToggleRagdoll(bool toggle)
+    {
+        foreach (Rigidbody rig in ragdollBones)
+            rig.isKinematic = !toggle;
+    }
 
     public void DoDamage(Collider col, float damage)
     {
@@ -22,8 +34,12 @@ public class RemovableLimbs : MonoBehaviour
 
         if (normalDamage)
             health -= damage;
+
+        if (health <= 0)
+            ToggleRagdoll(true);
     }
 
+    [System.Serializable]
     public class RemovableLimbInformation
     {
         public Collider col;
