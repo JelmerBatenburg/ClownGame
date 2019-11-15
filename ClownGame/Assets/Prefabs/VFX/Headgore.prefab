@@ -24263,7 +24263,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 2
-      minScalar: 4
+      minScalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -27890,7 +27890,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.18
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -48343,7 +48343,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 2
-      minScalar: 4
+      minScalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -51970,7 +51970,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.11
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -67496,7 +67496,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 2
-      minScalar: 4
+      minScalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -71123,7 +71123,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.21
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -77143,7 +77143,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 2
-      minScalar: 4
+      minScalar: 6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -80770,7 +80770,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 0.18
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
