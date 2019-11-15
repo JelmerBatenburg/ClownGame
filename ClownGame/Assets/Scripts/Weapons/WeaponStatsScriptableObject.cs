@@ -8,6 +8,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     [Header("BaseSettings")]
     public FireType fireType;
     public ProjectileType projectileType;
+    public AudioClip clip;
 
     [Header("BaseStats")]
     public float damage = 1;

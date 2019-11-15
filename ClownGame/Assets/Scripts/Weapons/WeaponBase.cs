@@ -9,6 +9,7 @@ public class WeaponBase : MonoBehaviour
     public int currentAmmo;
     public Transform weapon;
     public string enemyTag;
+    public AudioSource source;
 
     public void Update()
     {
@@ -47,15 +48,15 @@ public class WeaponBase : MonoBehaviour
         {
             case WeaponStatsScriptableObject.ProjectileType.rayCast:
                 RaycastHit hit = new RaycastHit();
-                Debug.Log("Fired");
+                source.PlayOneShot(stats.clip);
                 if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, stats.raycastFireLength))
                     if(hit.transform.tag == enemyTag)
                     {
-                        Debug.Log("Hit Enemy");
                         GameObject currentObject = hit.transform.gameObject;
                         while (!currentObject.GetComponent<RemovableLimbs>())
                             currentObject = currentObject.transform.parent.gameObject;
                         currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, stats.damage);
+                        StartCoroutine(currentObject.GetComponent<RemovableLimbs>().DelayedForce(hit.point - Camera.main.transform.forward));
                     }
                 break;
         }

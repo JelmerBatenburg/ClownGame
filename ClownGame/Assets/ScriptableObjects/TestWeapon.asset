@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireType: 0
   projectileType: 0
+  clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
   damage: 1
-  fireRate: 0.5
+  fireRate: 0.1
   accuracy: 0.15
   horizontalRotationRecoil: 45
   backwardsRecoil: 0.05

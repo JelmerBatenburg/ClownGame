@@ -22,6 +22,12 @@ public class CharacterMovement : MonoBehaviour
     public float weaponLerpSpeed;
     public float weaponJumpWeight;
 
+    public void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void Update()
     {
         Move();
