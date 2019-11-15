@@ -1850,6 +1850,10 @@ MonoBehaviour:
       lifeTime: 5
       parented: 1
       parentedObject: {fileID: 2185824229022369589}
+    - obj: {fileID: 3719998912741648967, guid: 82078dcd7be4271489f47bd54455be62, type: 3}
+      lifeTime: 12
+      parented: 1
+      parentedObject: {fileID: 2185824229022369589}
     clip: {fileID: 8300000, guid: 8b7a638c763ef1d4a81041b812e9f444, type: 3}
   - col: {fileID: 2305329244206411977}
     obj: {fileID: 1763029536228851893}
@@ -1859,6 +1863,10 @@ MonoBehaviour:
       lifeTime: 5
       parented: 0
       parentedObject: {fileID: 5244048513949190245}
+    - obj: {fileID: 3719998912741648967, guid: 82078dcd7be4271489f47bd54455be62, type: 3}
+      lifeTime: 12
+      parented: 1
+      parentedObject: {fileID: 5244048513949190245}
     clip: {fileID: 0}
   - col: {fileID: 2305329244831888830}
     obj: {fileID: 8414274130564898516}
@@ -1867,6 +1875,10 @@ MonoBehaviour:
     - obj: {fileID: 1497625772652098891, guid: 1e6438484fa55bb4ab6fec10dba9f379, type: 3}
       lifeTime: 5
       parented: 0
+      parentedObject: {fileID: 239661041447239172}
+    - obj: {fileID: 3719998912741648967, guid: 82078dcd7be4271489f47bd54455be62, type: 3}
+      lifeTime: 12
+      parented: 1
       parentedObject: {fileID: 239661041447239172}
     clip: {fileID: 0}
   ragdollBones:
