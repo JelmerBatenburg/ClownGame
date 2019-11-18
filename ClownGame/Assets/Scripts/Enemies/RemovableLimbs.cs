@@ -25,13 +25,6 @@ public class RemovableLimbs : Photon.MonoBehaviour
         animator.enabled = !toggle;
     }
 
-    public IEnumerator DelayedForce(Vector3 point)
-    {
-        yield return null;
-        foreach (Rigidbody rig in ragdollBones)
-            rig.AddExplosionForce(ragdollpartRemovalForce, point, Mathf.Infinity);
-    }
-
     [PunRPC,HideInInspector]
     public void RemoveLimb(int index)
     {
@@ -49,7 +42,7 @@ public class RemovableLimbs : Photon.MonoBehaviour
         }
     }
 
-    public void DoDamage(Collider col, float damage)
+    public void DoDamage(Collider col, float damage, Vector3 damagePoint)
     {
         bool normalDamage = true;
         for (int i = 0; i < removableLimbs.Length; i++)
@@ -58,25 +51,27 @@ public class RemovableLimbs : Photon.MonoBehaviour
                 normalDamage = false;
                 health -= damage * removableLimbs[i].damageMultiplier;
                 if (health <= 0)
-                    photonView.RPC("RemoveLimb", PhotonTargets.All, i);
+                    photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint);
                 break;
             }
 
         if (normalDamage)
             health -= damage;
 
-        photonView.RPC("ChangeHealth", PhotonTargets.All, health);
+        photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint);
     }
 
     [PunRPC,HideInInspector]
-    public void ChangeHealth(float currentHealth)
+    public void ChangeHealth(float currentHealth, Vector3 damagePoint)
     {
         health = currentHealth;
 
         if (health <= 0)
         {
             ToggleRagdoll(true);
-            if(photonView.isMine)
+            foreach (Rigidbody rig in ragdollBones)
+                rig.AddExplosionForce(ragdollpartRemovalForce, damagePoint, Mathf.Infinity);
+            if (photonView.isMine)
                 Destroy(gameObject, bodyLifeTime);
         }
     }

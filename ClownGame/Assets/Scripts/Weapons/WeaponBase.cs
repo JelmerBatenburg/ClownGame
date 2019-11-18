@@ -68,8 +68,7 @@ public class WeaponBase : MonoBehaviour
                         GameObject currentObject = hit.transform.gameObject;
                         while (!currentObject.GetComponent<RemovableLimbs>())
                             currentObject = currentObject.transform.parent.gameObject;
-                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, stats.damage);
-                        StartCoroutine(currentObject.GetComponent<RemovableLimbs>().DelayedForce(hit.point - Camera.main.transform.forward));
+                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, stats.damage, hit.point - Camera.main.transform.forward);
                     }
                 break;
         }
