@@ -158,8 +158,6 @@ public class MainMenuNetworking : Photon.MonoBehaviour
                 photonView.RPC("SetAPlayerReady", PhotonTargets.All, !player.isReady, PhotonNetwork.player.NickName);
                 break;
             }
-        if (PhotonNetwork.isMasterClient)
-            CheckIfEveryoneIsReady();
     }
 
     public void CheckIfEveryoneIsReady()
@@ -182,6 +180,8 @@ public class MainMenuNetworking : Photon.MonoBehaviour
             if (player.player.NickName == playerName)
                 player.isReady = ready;
         StartCoroutine(DisplayPlayers());
+        if (PhotonNetwork.isMasterClient)
+            CheckIfEveryoneIsReady();
     }
 
     [PunRPC,HideInInspector]
