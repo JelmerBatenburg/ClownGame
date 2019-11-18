@@ -12,8 +12,8 @@ public class BaseEnemy : Photon.MonoBehaviour
     public float targetZone;
     public float attackZone;
 
-    Vector3 position;
-    Quaternion rotation;
+    Vector3 position = new Vector3();
+    Quaternion rotation = new Quaternion();
     public float lerpSpeed = 9;
 
     public void Start()
@@ -21,8 +21,8 @@ public class BaseEnemy : Photon.MonoBehaviour
         FindNearestTarget();
         if (!photonView.isMine)
         {
-            StartCoroutine(LerpPosition());
             agent.enabled = false;
+            StartCoroutine(LerpPosition());
         }
     }
 
