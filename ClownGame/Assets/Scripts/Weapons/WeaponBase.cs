@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class WeaponBase : Photon.MonoBehaviour
 {
-    public WeaponStatsScriptableObject stats;
+    public WeaponStatsScriptableObject[] weapons;
+    public int currentWeapon;
     public bool activeFire;
     public int currentAmmo;
     public Transform weapon;
     public string enemyTag;
     public AudioSource source;
+    public LayerMask enemyMask;
     [Header("WeaponSway")]
     public float weaponSwayStrenght;
     public float weaponLerpSpeed;
@@ -35,13 +37,13 @@ public class WeaponBase : Photon.MonoBehaviour
     {
         activeFire = true;
 
-        switch (stats.fireType)
+        switch (weapons[currentWeapon].fireType)
         {
             case WeaponStatsScriptableObject.FireType.burst:
-                for (int i = 0; i < stats.burstRounds; i++)
+                for (int i = 0; i < weapons[currentWeapon].burstRounds; i++)
                 {
                     Shoot();
-                    yield return new WaitForSeconds(stats.burstFireDelay);
+                    yield return new WaitForSeconds(weapons[currentWeapon].burstFireDelay);
                 }
                 break;
             default:
@@ -49,8 +51,8 @@ public class WeaponBase : Photon.MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(stats.fireRate);
-        if (Input.GetButton("Fire1") && stats.fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo != 0) 
+        yield return new WaitForSeconds(weapons[currentWeapon].fireRate);
+        if (Input.GetButton("Fire1") && weapons[currentWeapon].fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo != 0) 
             StartCoroutine(Shooting());
         else
             activeFire = false;
@@ -58,23 +60,34 @@ public class WeaponBase : Photon.MonoBehaviour
 
     public void Shoot()
     {
-        switch (stats.projectileType)
+        switch (weapons[currentWeapon].projectileType)
         {
             case WeaponStatsScriptableObject.ProjectileType.rayCast:
                 RaycastHit hit = new RaycastHit();
-                source.PlayOneShot(stats.clip);
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, stats.raycastFireLength))
-                    if(hit.transform.tag == enemyTag)
+                source.PlayOneShot(weapons[currentWeapon].clip);
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, weapons[currentWeapon].raycastFireLength))
+                    if(hit.transform.tag == enemyTag && !weapons[currentWeapon].explodingBullets)
                     {
                         GameObject currentObject = hit.transform.gameObject;
                         while (!currentObject.GetComponent<RemovableLimbs>())
                             currentObject = currentObject.transform.parent.gameObject;
-                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, stats.damage, hit.point - Camera.main.transform.forward);
+                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward);
+                    }
+                    else if(weapons[currentWeapon].explodingBullets)
+                    {
+                        Collider[] enemyParts = Physics.OverlapSphere(hit.point, weapons[currentWeapon].explosionRadius, enemyMask);
+                        foreach(Collider col in enemyParts)
+                        {
+                            GameObject currentObject = col.gameObject;
+                            while (!currentObject.GetComponent<RemovableLimbs>())
+                                currentObject = currentObject.transform.parent.gameObject;
+                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, hit.point + (Vector3.down / 3));
+                        }
                     }
                 break;
         }
 
-        photonView.RPC("Recoil", PhotonTargets.All, stats.backwardsRecoil, stats.horizontalRotationRecoil);
+        photonView.RPC("Recoil", PhotonTargets.All, weapons[currentWeapon].backwardsRecoil, weapons[currentWeapon].horizontalRotationRecoil);
     }
 
     [PunRPC]

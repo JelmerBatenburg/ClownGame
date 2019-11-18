@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07d527ea620bd14f84bf67561991943, type: 3}
   m_Name: TestWeapon
   m_EditorClassIdentifier: 
+  weaponObject: {fileID: 0}
+  controller: {fileID: 0}
   fireType: 0
   projectileType: 0
   clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
@@ -29,8 +31,9 @@ MonoBehaviour:
   raycastFireLength: 40
   piercing: 0
   bulletHealth: 0
-  explodingBullets: 0
-  explosionDamage: 0
+  explodingBullets: 1
+  explosionDamage: 1
+  explosionRadius: 2.4
   gravity: 0
   lifeTime: 0
   bounces: 0

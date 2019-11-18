@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5551923296424195279}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7599887490393559354}
   - component: {fileID: 5813416722112661868}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 2305329244206411979}
   - component: {fileID: 2305329244206411977}
   - component: {fileID: 2305329244206411976}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperArm_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -206,7 +206,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0021222513, y: 0.004536237, z: -0.0003853057}
+  m_ConnectedAnchor: {x: -0.0021222513, y: 0.004536237, z: -0.00038530186}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 2305329244645042325}
   - component: {fileID: 2305329244645042322}
   - component: {fileID: 2305329244645042324}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LowerLeg_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000000020081645, y: 0.004380529, z: 0}
+  m_ConnectedAnchor: {x: 0.0000000018626454, y: 0.0043805293, z: 0}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 7361857977069108449}
   - component: {fileID: 2305329243773006996}
   - component: {fileID: 2305329243773006997}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Armature
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -422,7 +422,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8700237870535127260}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,7 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4230079637234406180}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2902146883879741293}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   - component: {fileID: 2305329244831888816}
   - component: {fileID: 2305329244831888830}
   - component: {fileID: 2305329244831888817}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperArm_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -579,7 +579,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0022685442, y: 0.0045362385, z: -0.00038530192}
+  m_ConnectedAnchor: {x: 0.0022685444, y: 0.0045362376, z: -0.00038530558}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -622,7 +622,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7568102297370939034}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Neck
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -656,7 +656,7 @@ GameObject:
   - component: {fileID: 2305329243372105459}
   - component: {fileID: 2305329243372105456}
   - component: {fileID: 2305329243372105458}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LowerArm_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -2.6193459e-10, y: 0.003121065, z: -4.0745368e-10}
+  m_ConnectedAnchor: {x: 0.0000000021245807, y: 0.0031210652, z: -4.365575e-10}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -762,7 +762,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6283445593356598113}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6434801653994085012}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -822,7 +822,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1287418680335185920}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -853,7 +853,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4932484004385981094}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 2305329243370712508}
   - component: {fileID: 2305329243370712506}
   - component: {fileID: 2305329243370712509}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperLeg_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -949,7 +949,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0012360673, y: 0.00035358488, z: 0.008265474}
+  m_ConnectedAnchor: {x: -0.0012360673, y: 0.0003535837, z: 0.008265474}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -995,7 +995,7 @@ GameObject:
   - component: {fileID: 2305329243317636307}
   - component: {fileID: 2305329243317636304}
   - component: {fileID: 2305329243317636306}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LowerLeg_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1058,7 +1058,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 8.80391e-10, y: 0.004380531, z: 0}
+  m_ConnectedAnchor: {x: 0.0000000014624677, y: 0.004380531, z: 0}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -1104,7 +1104,7 @@ GameObject:
   - component: {fileID: 2305329244539471582}
   - component: {fileID: 2305329244539471583}
   - component: {fileID: 2305329244539471569}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head 1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1166,7 +1166,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.7098502e-10, y: 0.005842243, z: -0.0005134354}
+  m_ConnectedAnchor: {x: -1.6007108e-10, y: 0.005842243, z: -0.0005134354}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -1210,7 +1210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5954609598115590604}
   - component: {fileID: 655252588871534275}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1307,7 +1307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7219324636486270327}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hand_L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1339,7 +1339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 598826563804786642}
   - component: {fileID: 8967446654918422944}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1436,7 +1436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7309354063625095896}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pelvis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1470,7 +1470,7 @@ GameObject:
   - component: {fileID: 2305329243536320814}
   - component: {fileID: 2305329243536320812}
   - component: {fileID: 2305329243536320815}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperLeg_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1533,7 +1533,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0013615207, y: 0.00035358607, z: 0.008265474}
+  m_ConnectedAnchor: {x: 0.001361521, y: 0.0003535825, z: 0.008265474}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -1579,7 +1579,7 @@ GameObject:
   - component: {fileID: 2305329243512233077}
   - component: {fileID: 2305329243512233074}
   - component: {fileID: 2305329243512233076}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LowerArm_R
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1642,7 +1642,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: 1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000000010186338, y: 0.0031210624, z: -1.1641534e-10}
+  m_ConnectedAnchor: {x: 0.000000001309672, y: 0.0031210624, z: 2.3283067e-10}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -1691,7 +1691,7 @@ GameObject:
   - component: {fileID: 2305329243681090280}
   - component: {fileID: 2311968091669715239}
   - component: {fileID: 4003967117261096238}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GoreEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1982,7 +1982,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1897834738648296465}
   - component: {fileID: 3021456207376518335}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Arm_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2082,7 +2082,7 @@ GameObject:
   - component: {fileID: 2305329243823785304}
   - component: {fileID: 2305329243823785254}
   - component: {fileID: 2305329243823785305}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: LowerBody
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -2144,7 +2144,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 1.6562182e-11, y: 0.00070706726, z: 0.009375476}
+  m_ConnectedAnchor: {x: -3.322114e-11, y: 0.00070706726, z: 0.009375476}
   serializedVersion: 2
   m_SwingAxis: {x: -1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -2187,7 +2187,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6811440756921941512}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Foot_L
   m_TagString: Enemy
   m_Icon: {fileID: 0}

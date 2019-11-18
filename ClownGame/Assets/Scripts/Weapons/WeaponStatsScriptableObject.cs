@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 [CreateAssetMenu(fileName = "WeaponStats",menuName = "WeaponStats")]
 public class WeaponStatsScriptableObject : ScriptableObject
 {
+    [Header("Visuals")]
+    public GameObject weaponObject;
+    public RuntimeAnimatorController controller;
+
     [Header("BaseSettings")]
     public FireType fireType;
     public ProjectileType projectileType;
@@ -31,6 +36,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public float bulletHealth;
     public bool explodingBullets;
     public float explosionDamage;
+    public float explosionRadius;
 
     [Header("ProjectileWeapons")]
     public float gravity;
