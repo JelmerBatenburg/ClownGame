@@ -41,4 +41,7 @@ MonoBehaviour:
   - SendReadyPLayerInformation
   - AskReadyInfo
   - SpawnParticle
+  - RemoveLimb
+  - ToggleRagdoll
+  - ChangeHealth
   DisableAutoOpenWizard: 1

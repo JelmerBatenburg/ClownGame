@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RemovableLimbs : MonoBehaviour
+public class RemovableLimbs : Photon.MonoBehaviour
 {
     public RemovableLimbInformation[] removableLimbs;
     public List<Rigidbody> ragdollBones;
@@ -11,6 +11,7 @@ public class RemovableLimbs : MonoBehaviour
     public Animator animator;
     public AudioSource source;
     public float bodyLifeTime;
+    public bool died;
 
     public void Start()
     {
@@ -31,38 +32,52 @@ public class RemovableLimbs : MonoBehaviour
             rig.AddExplosionForce(ragdollpartRemovalForce, point, Mathf.Infinity);
     }
 
+    [PunRPC,HideInInspector]
+    public void RemoveLimb(int index)
+    {
+        RemovableLimbInformation info = removableLimbs[index];
+        info.col.enabled = false;
+        info.obj.SetActive(false);
+        if (info.clip)
+            source.PlayOneShot(info.clip);
+        foreach (GoreInstantiatables gore in info.instantiatables)
+        {
+            GameObject g = Instantiate(gore.obj, gore.parentedObject.position, gore.parentedObject.rotation);
+            Destroy(g, gore.lifeTime);
+            if (gore.parented)
+                g.transform.parent = gore.parentedObject;
+        }
+    }
+
     public void DoDamage(Collider col, float damage)
     {
         bool normalDamage = true;
-        foreach(RemovableLimbInformation info in removableLimbs)
-            if(col == info.col)
+        for (int i = 0; i < removableLimbs.Length; i++)
+            if(col == removableLimbs[i].col)
             {
                 normalDamage = false;
-                health -= damage *= info.damageMultiplier;
+                health -= damage * removableLimbs[i].damageMultiplier;
                 if (health <= 0)
-                {
-                    info.col.enabled = false;
-                    info.obj.SetActive(false);
-                    if (info.clip)
-                        source.PlayOneShot(info.clip);
-                    foreach(GoreInstantiatables gore in info.instantiatables)
-                    {
-                        GameObject g = Instantiate(gore.obj, gore.parentedObject.position, gore.parentedObject.rotation);
-                        Destroy(g, gore.lifeTime);
-                        if (gore.parented)
-                            g.transform.parent = gore.parentedObject;
-                    }
-                }
+                    photonView.RPC("RemoveLimb", PhotonTargets.All, i);
                 break;
             }
 
         if (normalDamage)
             health -= damage;
 
+        photonView.RPC("ChangeHealth", PhotonTargets.All, health);
+    }
+
+    [PunRPC,HideInInspector]
+    public void ChangeHealth(float currentHealth)
+    {
+        health = currentHealth;
+
         if (health <= 0)
         {
             ToggleRagdoll(true);
-            Destroy(gameObject, bodyLifeTime);
+            if(photonView.isMine)
+                Destroy(gameObject, bodyLifeTime);
         }
     }
 
