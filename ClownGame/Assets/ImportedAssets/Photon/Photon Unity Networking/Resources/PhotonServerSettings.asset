@@ -44,4 +44,5 @@ MonoBehaviour:
   - RemoveLimb
   - ToggleRagdoll
   - ChangeHealth
+  - Recoil
   DisableAutoOpenWizard: 1

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour
+public class WeaponBase : Photon.MonoBehaviour
 {
     public WeaponStatsScriptableObject stats;
     public bool activeFire;
@@ -18,14 +18,15 @@ public class WeaponBase : MonoBehaviour
 
     public void WeaponSway()
     {
-        weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (playerRig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
+        if (photonView.isMine)
+            weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (playerRig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
         weapon.position = Vector3.Lerp(weapon.position, weapon.parent.position, Time.deltaTime * weaponLerpSpeed);
         weapon.rotation = Quaternion.Lerp(weapon.rotation, weapon.parent.rotation, Time.deltaTime * weaponLerpSpeed);
     }
 
     public void Update()
     {
-        if (!activeFire && Input.GetButtonDown("Fire1"))
+        if (!activeFire && Input.GetButtonDown("Fire1") && photonView.isMine)
             StartCoroutine(Shooting());
         WeaponSway();
     }
@@ -72,8 +73,14 @@ public class WeaponBase : MonoBehaviour
                     }
                 break;
         }
-            
-        weapon.Translate(-Vector3.forward * stats.backwardsRecoil);
-        weapon.Rotate(-Vector3.right * Random.Range(stats.horizontalRotationRecoil / 2f, stats.horizontalRotationRecoil));
+
+        photonView.RPC("Recoil", PhotonTargets.All, stats.backwardsRecoil, stats.horizontalRotationRecoil);
+    }
+
+    [PunRPC]
+    public void Recoil(float backwardsRecoil,float horizontalRecoil)
+    {
+        weapon.Translate(-Vector3.forward * backwardsRecoil);
+        weapon.Rotate(-Vector3.right * Random.Range(horizontalRecoil / 2f, horizontalRecoil));
     }
 }

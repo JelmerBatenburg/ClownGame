@@ -73,6 +73,7 @@ public class RemovableLimbs : Photon.MonoBehaviour
                 rig.AddExplosionForce(ragdollpartRemovalForce, damagePoint, Mathf.Infinity);
             if (photonView.isMine)
                 StartCoroutine(DelayedPhotonDestroy(bodyLifeTime));
+            GetComponent<BaseEnemy>().DisableNavMesh();
         }
     }
 

@@ -89,7 +89,6 @@ public class CharacterMovement : Photon.MonoBehaviour
             rotation = (Quaternion)stream.ReceiveNext();
             camRotation = (Quaternion)stream.ReceiveNext();
         }
-
     }
 
     public void OnDrawGizmos()
