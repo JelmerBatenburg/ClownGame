@@ -26,6 +26,11 @@ public class MainMenuNetworking : Photon.MonoBehaviour
     [Header("Scenes")]
     public string gameScene;
 
+    public void Start()
+    {
+        PhotonNetwork.automaticallySyncScene = true;
+    }
+
     public void OnPhotonPlayerConnected(PhotonPlayer newPlayer)
     {
         StartCoroutine(DisplayPlayers());
