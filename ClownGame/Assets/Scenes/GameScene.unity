@@ -684,7 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71b6704f54db7804589ba9d6471f56ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 7845202028033901948, guid: 7d8b2cbd4d157fe47839837b17269388, type: 3}
+  enemy: GoreEnemy
   spawnspot: {fileID: 1533845919}
   input: Test
 --- !u!4 &1533845919
@@ -1033,43 +1033,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2305329244943762712, guid: 7d8b2cbd4d157fe47839837b17269388,
+    - target: {fileID: 2305329243681090280, guid: 7d8b2cbd4d157fe47839837b17269388,
         type: 3}
-      propertyPath: health
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2305329243681090280, guid: 7d8b2cbd4d157fe47839837b17269388,
+        type: 3}
+      propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d8b2cbd4d157fe47839837b17269388, type: 3}
---- !u!1 &2305329243681090279 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7845202028033901948, guid: 7d8b2cbd4d157fe47839837b17269388,
-    type: 3}
-  m_PrefabInstance: {fileID: 2305329243681090278}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2305329243681090280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2305329243681090279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: 0
-  group: 0
-  OwnerShipWasTransfered: 0
-  prefixBackup: -1
-  synchronization: 0
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
-  ownershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  ObservedComponentsFoldoutOpen: 1
-  viewIdField: 1
-  instantiationId: 1
-  currentMasterID: -1
-  isRuntimeInstantiated: 0

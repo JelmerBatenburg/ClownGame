@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResetEnemy : MonoBehaviour
+public class ResetEnemy : Photon.MonoBehaviour
 {
-    public GameObject enemy;
+    public string enemy;
     public Transform spawnspot;
 
     public string input;
@@ -12,6 +12,6 @@ public class ResetEnemy : MonoBehaviour
     public void Update()
     {
         if (Input.GetButtonDown(input))
-            Instantiate(enemy, spawnspot.position, spawnspot.rotation);
+            PhotonNetwork.Instantiate(enemy, spawnspot.position, spawnspot.rotation, 0);
     }
 }

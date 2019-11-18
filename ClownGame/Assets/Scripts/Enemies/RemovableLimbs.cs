@@ -51,7 +51,7 @@ public class RemovableLimbs : Photon.MonoBehaviour
                 normalDamage = false;
                 health -= damage * removableLimbs[i].damageMultiplier;
                 if (health <= 0)
-                    photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint);
+                    photonView.RPC("RemoveLimb", PhotonTargets.All, i);
                 break;
             }
 
