@@ -10,11 +10,24 @@ public class WeaponBase : MonoBehaviour
     public Transform weapon;
     public string enemyTag;
     public AudioSource source;
+    [Header("WeaponSway")]
+    public float weaponSwayStrenght;
+    public float weaponLerpSpeed;
+    public float weaponJumpWeight;
+    public Rigidbody playerRig;
+
+    public void WeaponSway()
+    {
+        weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (playerRig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
+        weapon.position = Vector3.Lerp(weapon.position, weapon.parent.position, Time.deltaTime * weaponLerpSpeed);
+        weapon.rotation = Quaternion.Lerp(weapon.rotation, weapon.parent.rotation, Time.deltaTime * weaponLerpSpeed);
+    }
 
     public void Update()
     {
         if (!activeFire && Input.GetButtonDown("Fire1"))
             StartCoroutine(Shooting());
+        WeaponSway();
     }
 
     public IEnumerator Shooting()

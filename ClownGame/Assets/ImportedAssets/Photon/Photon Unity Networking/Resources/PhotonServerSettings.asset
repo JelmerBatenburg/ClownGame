@@ -40,4 +40,5 @@ MonoBehaviour:
   - SetAPlayerReady
   - SendReadyPLayerInformation
   - AskReadyInfo
+  - SpawnParticle
   DisableAutoOpenWizard: 1

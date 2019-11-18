@@ -16,11 +16,6 @@ public class CharacterMovement : MonoBehaviour
     [Header("Rotation")]
     public Transform cam;
     public float rotationSpeed;
-    [Header("WeaponSway")]
-    public float weaponSwayStrenght;
-    public Transform weapon;
-    public float weaponLerpSpeed;
-    public float weaponJumpWeight;
 
     public void Start()
     {
@@ -32,14 +27,6 @@ public class CharacterMovement : MonoBehaviour
     {
         Move();
         Rotate();
-        WeaponSway();
-    }
-
-    public void WeaponSway()
-    {
-        weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (rig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
-        weapon.position = Vector3.Lerp(weapon.position, weapon.parent.position, Time.deltaTime * weaponLerpSpeed);
-        weapon.rotation = Quaternion.Lerp(weapon.rotation, weapon.parent.rotation, Time.deltaTime * weaponLerpSpeed);
     }
 
     public void Rotate()
