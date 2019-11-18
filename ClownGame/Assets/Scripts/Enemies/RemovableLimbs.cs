@@ -72,8 +72,14 @@ public class RemovableLimbs : Photon.MonoBehaviour
             foreach (Rigidbody rig in ragdollBones)
                 rig.AddExplosionForce(ragdollpartRemovalForce, damagePoint, Mathf.Infinity);
             if (photonView.isMine)
-                Destroy(gameObject, bodyLifeTime);
+                StartCoroutine(DelayedPhotonDestroy(bodyLifeTime));
         }
+    }
+
+    public IEnumerator DelayedPhotonDestroy(float time)
+    {
+        yield return new WaitForSeconds(time);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [System.Serializable]
