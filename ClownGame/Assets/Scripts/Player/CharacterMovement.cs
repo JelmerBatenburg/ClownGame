@@ -87,7 +87,7 @@ public class CharacterMovement : Photon.MonoBehaviour
         {
             position = (Vector3)stream.ReceiveNext();
             rotation = (Quaternion)stream.ReceiveNext();
-            cam.rotation = (Quaternion)stream.ReceiveNext();
+            camRotation = (Quaternion)stream.ReceiveNext();
         }
 
     }
