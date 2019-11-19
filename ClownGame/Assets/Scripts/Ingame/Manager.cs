@@ -30,7 +30,7 @@ public class Manager : Photon.MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         if (currentPlayer)
-            Destroy(currentPlayer);
+            PhotonNetwork.Destroy(currentPlayer);
         foreach (Transform spawnSpot in spawnPoints)
             if (!Physics.CheckSphere(spawnSpot.position, notAllowedSpawnPointRange, playerMask))
             {
