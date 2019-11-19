@@ -42,7 +42,7 @@ public class RemovableLimbs : Photon.MonoBehaviour
         }
     }
 
-    public void DoDamage(Collider col, float damage, Vector3 damagePoint)
+    public void DoDamage(Collider col, float damage, Vector3 damagePoint, float force)
     {
         bool normalDamage = true;
         for (int i = 0; i < removableLimbs.Length; i++)
@@ -58,11 +58,11 @@ public class RemovableLimbs : Photon.MonoBehaviour
         if (normalDamage)
             health -= damage;
 
-        photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint);
+        photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint, force);
     }
 
     [PunRPC,HideInInspector]
-    public void ChangeHealth(float currentHealth, Vector3 damagePoint)
+    public void ChangeHealth(float currentHealth, Vector3 damagePoint, float force)
     {
         health = currentHealth;
 
@@ -70,7 +70,7 @@ public class RemovableLimbs : Photon.MonoBehaviour
         {
             ToggleRagdoll(true);
             foreach (Rigidbody rig in ragdollBones)
-                rig.AddExplosionForce(ragdollpartRemovalForce, damagePoint, Mathf.Infinity);
+                rig.AddExplosionForce(force, damagePoint, Mathf.Infinity);
             if (photonView.isMine)
                 StartCoroutine(DelayedPhotonDestroy(bodyLifeTime));
             GetComponent<BaseEnemy>().DisableNavMesh();

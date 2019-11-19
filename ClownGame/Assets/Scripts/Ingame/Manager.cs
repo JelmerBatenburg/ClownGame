@@ -39,6 +39,12 @@ public class Manager : Photon.MonoBehaviour
             }
     }
 
+    [PunRPC]
+    public void CallScreenShake(float time, float intensity)
+    {
+        StartCoroutine(Camera.main.GetComponent<ScreenShake>().CallScreenShake(time, intensity));
+    }
+
     public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

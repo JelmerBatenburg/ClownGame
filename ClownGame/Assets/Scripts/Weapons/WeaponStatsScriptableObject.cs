@@ -9,6 +9,8 @@ public class WeaponStatsScriptableObject : ScriptableObject
     [Header("Visuals")]
     public GameObject weaponObject;
     public RuntimeAnimatorController controller;
+    public float explosionScreenShakeTime;
+    public float explosionScreenShakeIntensity;
 
     [Header("BaseSettings")]
     public FireType fireType;
@@ -25,6 +27,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public int maxAmmoPouchSize = 160;
     public float reloadSpeed;
     public int projectileAmount = 1;
+    public float force = 140;
 
     [Header("BurstFireStats")]
     public float burstFireDelay;

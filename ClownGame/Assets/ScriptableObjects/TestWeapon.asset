@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponObject: {fileID: 0}
   controller: {fileID: 0}
+  explosionScreenShakeTime: 0.07
+  explosionScreenShakeIntensity: 0.12
   fireType: 0
   projectileType: 0
   clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
@@ -26,6 +28,7 @@ MonoBehaviour:
   maxAmmoPouchSize: 160
   reloadSpeed: 0
   projectileAmount: 1
+  force: 100
   burstFireDelay: 0.06
   burstRounds: 3
   raycastFireLength: 40

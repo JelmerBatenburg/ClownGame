@@ -859,6 +859,7 @@ GameObject:
   - component: {fileID: 9190777467294107036}
   - component: {fileID: 9190777467294107039}
   - component: {fileID: 9190777467294107010}
+  - component: {fileID: 7178172991142462547}
   m_Layer: 9
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -991,6 +992,20 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &7178172991142462547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9190777467294107038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aae632a55e3189943a3b6770cd2f5d32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnLerp: 3
+  screenShakeDelay: 0.01
 --- !u!1001 &9190777466441989843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1004,6 +1019,31 @@ PrefabInstance:
       value: NewIKBoneClown
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 543148565407243456, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7726959827321717409, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 129350255495253916, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5133913965574556032, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9111962883125049612, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
         type: 3}
       propertyPath: m_Layer
       value: 9
@@ -1062,31 +1102,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 543148565407243456, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7726959827321717409, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 129350255495253916, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 5133913965574556032, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 9111962883125049612, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
-        type: 3}
-      propertyPath: m_Layer
-      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 6c8a044fb32c0bf4ba74c13e0a237ee9,
         type: 3}

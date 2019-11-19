@@ -52,7 +52,7 @@ public class WeaponBase : Photon.MonoBehaviour
         }
 
         yield return new WaitForSeconds(weapons[currentWeapon].fireRate);
-        if (Input.GetButton("Fire1") && weapons[currentWeapon].fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo != 0) 
+        if (Input.GetButton("Fire1") && weapons[currentWeapon].fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo > 0) 
             StartCoroutine(Shooting());
         else
             activeFire = false;
@@ -71,22 +71,23 @@ public class WeaponBase : Photon.MonoBehaviour
                         GameObject currentObject = hit.transform.gameObject;
                         while (!currentObject.GetComponent<RemovableLimbs>())
                             currentObject = currentObject.transform.parent.gameObject;
-                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward);
+                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward, weapons[currentWeapon].force);
                     }
                     else if(weapons[currentWeapon].explodingBullets)
                     {
                         Collider[] enemyParts = Physics.OverlapSphere(hit.point, weapons[currentWeapon].explosionRadius, enemyMask);
+                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("CallScreenShake", PhotonTargets.All, weapons[currentWeapon].explosionScreenShakeTime, weapons[currentWeapon].explosionScreenShakeIntensity);
                         foreach(Collider col in enemyParts)
                         {
                             GameObject currentObject = col.gameObject;
                             while (!currentObject.GetComponent<RemovableLimbs>())
                                 currentObject = currentObject.transform.parent.gameObject;
-                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, hit.point + (Vector3.down / 3));
+                            Vector3 explosionPoint = hit.point + (Vector3.down / 3) - (Camera.main.transform.forward / 4);
+                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, explosionPoint, weapons[currentWeapon].force);
                         }
                     }
                 break;
         }
-
         photonView.RPC("Recoil", PhotonTargets.All, weapons[currentWeapon].backwardsRecoil, weapons[currentWeapon].horizontalRotationRecoil);
     }
 
