@@ -9,8 +9,12 @@ public class WeaponStatsScriptableObject : ScriptableObject
     [Header("Visuals")]
     public GameObject weaponObject;
     public RuntimeAnimatorController controller;
+
+    [Header("CameraFeedbackStats")]
     public float explosionScreenShakeTime;
     public float explosionScreenShakeIntensity;
+    public float cameraRecoil;
+    public float camereHorizontalRecoil;
 
     [Header("BaseSettings")]
     public FireType fireType;

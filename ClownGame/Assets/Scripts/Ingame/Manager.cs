@@ -40,8 +40,9 @@ public class Manager : Photon.MonoBehaviour
     }
 
     [PunRPC]
-    public void CallScreenShake(float time, float intensity)
+    public void CallScreenShake(float time, float intensity, Vector3 point)
     {
+        intensity /= Vector3.Distance(Camera.main.transform.position, point);
         StartCoroutine(Camera.main.GetComponent<ScreenShake>().CallScreenShake(time, intensity));
     }
 

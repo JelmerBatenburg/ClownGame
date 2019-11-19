@@ -9,6 +9,7 @@ public class WeaponBase : Photon.MonoBehaviour
     public bool activeFire;
     public int currentAmmo;
     public Transform weapon;
+    public Transform cam;
     public string enemyTag;
     public AudioSource source;
     public LayerMask enemyMask;
@@ -17,6 +18,9 @@ public class WeaponBase : Photon.MonoBehaviour
     public float weaponLerpSpeed;
     public float weaponJumpWeight;
     public Rigidbody playerRig;
+    [Header("Reload")]
+    public WeaponObjectInformation info;
+    public string reloadInput;
 
     public void WeaponSway()
     {
@@ -28,9 +32,20 @@ public class WeaponBase : Photon.MonoBehaviour
 
     public void Update()
     {
-        if (!activeFire && Input.GetButtonDown("Fire1") && photonView.isMine)
+        if (!activeFire && Input.GetButtonDown("Fire1") && photonView.isMine && currentAmmo > 0)
             StartCoroutine(Shooting());
+        if (!activeFire && Input.GetButtonDown(reloadInput) && photonView.isMine && currentAmmo != weapons[currentWeapon].clipSize)
+            StartCoroutine(Reload());
         WeaponSway();
+    }
+
+    public IEnumerator Reload()
+    {
+        activeFire = true;
+        info.animator.SetTrigger("Reload");
+        yield return new WaitForSeconds(weapons[currentWeapon].reloadSpeed);
+        activeFire = false;
+        currentAmmo = weapons[currentWeapon].clipSize;
     }
 
     public IEnumerator Shooting()
@@ -76,7 +91,7 @@ public class WeaponBase : Photon.MonoBehaviour
                     else if(weapons[currentWeapon].explodingBullets)
                     {
                         Collider[] enemyParts = Physics.OverlapSphere(hit.point, weapons[currentWeapon].explosionRadius, enemyMask);
-                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("CallScreenShake", PhotonTargets.All, weapons[currentWeapon].explosionScreenShakeTime, weapons[currentWeapon].explosionScreenShakeIntensity);
+                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("CallScreenShake", PhotonTargets.All, weapons[currentWeapon].explosionScreenShakeTime, weapons[currentWeapon].explosionScreenShakeIntensity, hit.point);
                         foreach(Collider col in enemyParts)
                         {
                             GameObject currentObject = col.gameObject;
@@ -88,12 +103,23 @@ public class WeaponBase : Photon.MonoBehaviour
                     }
                 break;
         }
+        currentAmmo--;
         photonView.RPC("Recoil", PhotonTargets.All, weapons[currentWeapon].backwardsRecoil, weapons[currentWeapon].horizontalRotationRecoil);
     }
 
     [PunRPC]
     public void Recoil(float backwardsRecoil,float horizontalRecoil)
     {
+        float verticalRecoil = weapons[currentWeapon].cameraRecoil * Random.Range(-0.5f, -1f);
+        float horizontalCamRecoil = weapons[currentWeapon].camereHorizontalRecoil * Random.Range(-1f, 1f);
+
+        cam.parent.Rotate(Vector3.right * verticalRecoil);
+        cam.Rotate(-Vector3.right * verticalRecoil * 0.35f);
+
+        transform.Rotate(Vector3.up * horizontalCamRecoil);
+        cam.Rotate(-Vector3.up * horizontalCamRecoil * 0.35f, Space.World);
+
+
         weapon.Translate(-Vector3.forward * backwardsRecoil);
         weapon.Rotate(-Vector3.right * Random.Range(horizontalRecoil / 2f, horizontalRecoil));
     }
