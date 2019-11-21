@@ -61,7 +61,7 @@ public class BaseEnemy : Photon.MonoBehaviour
     {
         List<Collider> targetZonedPlayers = new List<Collider>(Physics.OverlapSphere(transform.position,targetZone,playerMask));
         List<Collider> damageZonedPlayers = new List<Collider>(Physics.OverlapSphere(transform.position, attackZone, playerMask));
-        if (targetZonedPlayers.Count > 0 && targetZonedPlayers.Contains(currentTarget.GetComponent<Collider>()))
+        if (targetZonedPlayers.Count > 0 && !targetZonedPlayers.Contains(currentTarget.GetComponent<Collider>()))
             currentTarget = targetZonedPlayers[0].transform;
         
         agent.SetDestination(currentTarget.transform.position);
