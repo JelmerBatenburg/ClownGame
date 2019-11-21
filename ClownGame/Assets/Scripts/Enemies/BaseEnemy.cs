@@ -12,6 +12,11 @@ public class BaseEnemy : Photon.MonoBehaviour
     public float targetZone;
     public float attackZone;
     public float health;
+    [Header("AttackInformation")]
+    public bool activeAttack;
+    public float attackTime;
+    public float damage;
+    public float recoveryTime;
     [Header("TargetingInformation")]
     public float minimalTargetingDamage;
     public float targetingDamageDropOff;
@@ -120,7 +125,25 @@ public class BaseEnemy : Photon.MonoBehaviour
             currentTarget = lowestPlayer.transform;
         }
 
-        agent.SetDestination(currentTarget.transform.position);
+        if (Vector3.Distance(currentTarget.position, transform.position) < attackZone && !activeAttack)
+        {
+            agent.SetDestination(transform.position);
+            transform.LookAt(new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z));
+            StartCoroutine(Attack());
+        }
+        else if (!activeAttack)
+            agent.SetDestination(currentTarget.transform.position);
+    }
+
+    public virtual IEnumerator Attack()
+    {
+        activeAttack = true;
+        //Doe animatie als er animatie is
+        yield return new WaitForSeconds(attackTime);
+        if (Vector3.Distance(transform.position, new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z)) <= attackZone)
+            Debug.Log("Damage");
+        yield return new WaitForSeconds(recoveryTime);
+        activeAttack = false;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
