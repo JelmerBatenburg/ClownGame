@@ -1953,6 +1953,7 @@ MonoBehaviour:
   minimalTargetingDamage: 40
   targetingDamageDropOff: 4
   damageInfo: []
+  targetLowestHealth: 0
   lerpSpeed: 9
 --- !u!195 &4003967117261096238
 NavMeshAgent:

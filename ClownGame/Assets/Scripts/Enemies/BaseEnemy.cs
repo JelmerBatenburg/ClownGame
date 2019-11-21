@@ -12,10 +12,11 @@ public class BaseEnemy : Photon.MonoBehaviour
     public float targetZone;
     public float attackZone;
     public float health;
-    [Header("DamageTargeting")]
+    [Header("TargetingInformation")]
     public float minimalTargetingDamage;
     public float targetingDamageDropOff;
     public List<TargetingDamageInfo> damageInfo = new List<TargetingDamageInfo>();
+    public bool targetLowestHealth;
 
     Vector3 position = new Vector3();
     Quaternion rotation = new Quaternion();
@@ -34,7 +35,7 @@ public class BaseEnemy : Photon.MonoBehaviour
     [PunRPC,HideInInspector]
     public void DamagedAggroSafe(float damage, string damager)
     {
-        if (photonView.isMine)
+        if (photonView.isMine && !targetLowestHealth)
         {
             bool found = false;
             for (int i = 0; i < damageInfo.Count; i++)
@@ -45,7 +46,6 @@ public class BaseEnemy : Photon.MonoBehaviour
                     if (damageInfo[i].damage >= minimalTargetingDamage && !Physics.CheckSphere(transform.position, targetZone, playerMask))
                     {
                         FindTargetPlayer(damageInfo[i].playerName);
-                        Debug.Log("Target");
                         damageInfo[i].damage = 0;
                     }
                     break;
@@ -108,9 +108,18 @@ public class BaseEnemy : Photon.MonoBehaviour
     {
         List<Collider> targetZonedPlayers = new List<Collider>(Physics.OverlapSphere(transform.position,targetZone,playerMask));
         List<Collider> damageZonedPlayers = new List<Collider>(Physics.OverlapSphere(transform.position, attackZone, playerMask));
-        if (targetZonedPlayers.Count > 0 && !targetZonedPlayers.Contains(currentTarget.GetComponent<Collider>()))
+        if (!targetLowestHealth && targetZonedPlayers.Count > 0 && !targetZonedPlayers.Contains(currentTarget.GetComponent<Collider>()))
             currentTarget = targetZonedPlayers[0].transform;
-        
+        else if (targetLowestHealth)
+        {
+            GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
+            CharacterMovement lowestPlayer = players[0].GetComponent<CharacterMovement>();
+            foreach (GameObject player in players)
+                if (player.GetComponent<CharacterMovement>().health <= lowestPlayer.health)
+                    lowestPlayer = player.GetComponent<CharacterMovement>();
+            currentTarget = lowestPlayer.transform;
+        }
+
         agent.SetDestination(currentTarget.transform.position);
     }
 
