@@ -24,7 +24,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     [Header("BaseStats")]
     public float damage = 1;
     public float fireRate = 0.4f;
-    public float accuracy = 0.15f;
+    public float spread = 0.15f;
     public float horizontalRotationRecoil = 1;
     public float backwardsRecoil = 1;
     public int clipSize = 16;
@@ -44,6 +44,7 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public bool explodingBullets;
     public float explosionDamage;
     public float explosionRadius;
+    public int explosionParticleIndex;
 
     [Header("ProjectileWeapons")]
     public float gravity;

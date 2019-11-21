@@ -80,7 +80,7 @@ public class WeaponBase : Photon.MonoBehaviour
             case WeaponStatsScriptableObject.ProjectileType.rayCast:
                 RaycastHit hit = new RaycastHit();
                 source.PlayOneShot(weapons[currentWeapon].clip);
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, weapons[currentWeapon].raycastFireLength))
+                if (Physics.Raycast(Camera.main.transform.position, getSpreadDirection(Camera.main.transform.forward,weapons[currentWeapon].spread), out hit, weapons[currentWeapon].raycastFireLength))
                     if(hit.transform.tag == enemyTag && !weapons[currentWeapon].explodingBullets)
                     {
                         GameObject currentObject = hit.transform.gameObject;
@@ -100,11 +100,23 @@ public class WeaponBase : Photon.MonoBehaviour
                             Vector3 explosionPoint = hit.point + (Vector3.down / 3) - (Camera.main.transform.forward / 4);
                             currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, explosionPoint, weapons[currentWeapon].force);
                         }
+                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("SpawnParticle", PhotonTargets.All, weapons[currentWeapon].explosionParticleIndex, hit.point, Quaternion.identity, null);
                     }
                 break;
         }
         currentAmmo--;
         photonView.RPC("Recoil", PhotonTargets.All, weapons[currentWeapon].backwardsRecoil, weapons[currentWeapon].horizontalRotationRecoil);
+    }
+
+    public static Vector3 getSpreadDirection(Vector3 dir, float spread)
+    {
+        Vector3 direction = Camera.main.transform.forward;
+        float x = spread * Random.Range(1f, -1f);
+        float y = spread * Random.Range(1f, -1f);
+        float z = spread * Random.Range(1f, -1f);
+
+        direction = Quaternion.Euler(x, y, z) * direction;
+        return direction;
     }
 
     [PunRPC]

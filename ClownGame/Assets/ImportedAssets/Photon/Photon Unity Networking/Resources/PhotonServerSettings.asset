@@ -46,4 +46,5 @@ MonoBehaviour:
   - ChangeHealth
   - Recoil
   - CallScreenShake
+  - DoDamage
   DisableAutoOpenWizard: 1

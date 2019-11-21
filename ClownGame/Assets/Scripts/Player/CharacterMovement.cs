@@ -7,6 +7,7 @@ public class CharacterMovement : Photon.MonoBehaviour
     [Header("Movement")]
     public float movementSpeed;
     Vector3 movementDirection;
+    public float health;
     [Header("GroundDetection")]
     public float jumpHeight;
     public string jumpInput;
@@ -23,6 +24,20 @@ public class CharacterMovement : Photon.MonoBehaviour
     Vector3 position;
     Quaternion rotation;
     Quaternion camRotation;
+
+    [PunRPC,HideInInspector]
+    public void DoDamage(float damage)
+    {
+        if (photonView.isMine)
+        {
+            health -= damage;
+            if (health <= damage)
+            {
+                PhotonNetwork.Destroy(gameObject);
+                GameObject.FindWithTag("Manager").GetComponent<Manager>().SpawnPlayer();
+            }
+        }
+    }
 
     public void Start()
     {
