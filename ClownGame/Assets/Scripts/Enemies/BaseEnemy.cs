@@ -12,7 +12,7 @@ public class BaseEnemy : Photon.MonoBehaviour
     public float targetZone;
     public float attackZone;
     public float health;
-
+    [Header("DamageTargeting")]
     public float minimalTargetingDamage;
     public float targetingDamageDropOff;
     public List<TargetingDamageInfo> damageInfo = new List<TargetingDamageInfo>();
@@ -42,9 +42,10 @@ public class BaseEnemy : Photon.MonoBehaviour
                 {
                     found = true;
                     damageInfo[i].damage += damage;
-                    if(damageInfo[i].damage >= minimalTargetingDamage && !Physics.CheckSphere(transform.position, targetZone))
+                    if (damageInfo[i].damage >= minimalTargetingDamage && !Physics.CheckSphere(transform.position, targetZone, playerMask))
                     {
                         FindTargetPlayer(damageInfo[i].playerName);
+                        Debug.Log("Target");
                         damageInfo[i].damage = 0;
                     }
                     break;
@@ -54,11 +55,11 @@ public class BaseEnemy : Photon.MonoBehaviour
         }
     }
 
-    public void FindTargetPlayer(string name)
+    public void FindTargetPlayer(string playerName)
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
         foreach (GameObject player in players)
-            if (player.GetPhotonView().owner.NickName == name)
+            if (player.GetPhotonView().owner.NickName == playerName)
                 currentTarget = player.transform;
     }
 
