@@ -11,6 +11,11 @@ public class BaseEnemy : Photon.MonoBehaviour
     public string playerTag;
     public float targetZone;
     public float attackZone;
+    public float health;
+
+    public float minimalTargetingDamage;
+    public float targetingDamageDropOff;
+    public List<TargetingDamageInfo> damageInfo = new List<TargetingDamageInfo>();
 
     Vector3 position = new Vector3();
     Quaternion rotation = new Quaternion();
@@ -26,6 +31,44 @@ public class BaseEnemy : Photon.MonoBehaviour
         }
     }
 
+    [PunRPC,HideInInspector]
+    public void DamagedAggroSafe(float damage, string damager)
+    {
+        if (photonView.isMine)
+        {
+            bool found = false;
+            for (int i = 0; i < damageInfo.Count; i++)
+                if (damager == damageInfo[i].playerName)
+                {
+                    found = true;
+                    damageInfo[i].damage += damage;
+                    if(damageInfo[i].damage >= minimalTargetingDamage && !Physics.CheckSphere(transform.position, targetZone))
+                    {
+                        FindTargetPlayer(damageInfo[i].playerName);
+                        damageInfo[i].damage = 0;
+                    }
+                    break;
+                }
+            if (!found)
+                damageInfo.Add(new TargetingDamageInfo(damager, damage));
+        }
+    }
+
+    public void FindTargetPlayer(string name)
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
+        foreach (GameObject player in players)
+            if (player.GetPhotonView().owner.NickName == name)
+                currentTarget = player.transform;
+    }
+
+    public void DropDamage()
+    {
+        foreach (TargetingDamageInfo info in damageInfo)
+            if (info.damage > 0)
+                info.damage -= targetingDamageDropOff * Time.deltaTime;
+    }
+
     public IEnumerator LerpPosition()
     {
         while (true)
@@ -39,7 +82,10 @@ public class BaseEnemy : Photon.MonoBehaviour
     public void Update()
     {
         if (photonView.isMine)
+        {
+            DropDamage();
             TargetPlayer();
+        }
     }
 
     public void FindNearestTarget()
@@ -87,5 +133,17 @@ public class BaseEnemy : Photon.MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, targetZone);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackZone);
+    }
+
+    [System.Serializable]
+    public class TargetingDamageInfo
+    {
+        public string playerName;
+        public float damage;
+        public TargetingDamageInfo(string _playerName,float _damage)
+        {
+            playerName = _playerName;
+            damage = _damage;
+        }
     }
 }

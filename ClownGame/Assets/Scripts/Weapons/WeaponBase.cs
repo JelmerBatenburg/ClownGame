@@ -86,7 +86,7 @@ public class WeaponBase : Photon.MonoBehaviour
                         GameObject currentObject = hit.transform.gameObject;
                         while (!currentObject.GetComponent<RemovableLimbs>())
                             currentObject = currentObject.transform.parent.gameObject;
-                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward, weapons[currentWeapon].force);
+                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward, weapons[currentWeapon].force, PhotonNetwork.playerName);
                     }
                     else if(weapons[currentWeapon].explodingBullets)
                     {
@@ -98,7 +98,7 @@ public class WeaponBase : Photon.MonoBehaviour
                             while (!currentObject.GetComponent<RemovableLimbs>())
                                 currentObject = currentObject.transform.parent.gameObject;
                             Vector3 explosionPoint = hit.point + (Vector3.down / 3) - (Camera.main.transform.forward / 4);
-                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, explosionPoint, weapons[currentWeapon].force);
+                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, explosionPoint, weapons[currentWeapon].force, PhotonNetwork.playerName);
                         }
                         GameObject.FindWithTag("Manager").GetPhotonView().RPC("SpawnParticle", PhotonTargets.All, weapons[currentWeapon].explosionParticleIndex, hit.point, Quaternion.identity, null);
                     }

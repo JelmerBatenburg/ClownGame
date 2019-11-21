@@ -21,7 +21,7 @@ MonoBehaviour:
   fireType: 0
   projectileType: 0
   clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
-  damage: 1
+  damage: 6
   fireRate: 0.1
   spread: 3.5
   horizontalRotationRecoil: 45

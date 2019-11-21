@@ -6,15 +6,16 @@ public class RemovableLimbs : Photon.MonoBehaviour
 {
     public RemovableLimbInformation[] removableLimbs;
     public List<Rigidbody> ragdollBones;
-    public float health;
     public float ragdollpartRemovalForce;
     public Animator animator;
     public AudioSource source;
     public float bodyLifeTime;
     public bool died;
+    public BaseEnemy enemyBase;
 
     public void Start()
     {
+        enemyBase = GetComponent<BaseEnemy>();
         ToggleRagdoll(false);
     }
 
@@ -42,31 +43,32 @@ public class RemovableLimbs : Photon.MonoBehaviour
         }
     }
 
-    public void DoDamage(Collider col, float damage, Vector3 damagePoint, float force)
+    public void DoDamage(Collider col, float damage, Vector3 damagePoint, float force, string damager)
     {
         bool normalDamage = true;
         for (int i = 0; i < removableLimbs.Length; i++)
             if(col == removableLimbs[i].col)
             {
                 normalDamage = false;
-                health -= damage * removableLimbs[i].damageMultiplier;
-                if (health <= 0)
+                damage = damage * removableLimbs[i].damageMultiplier;
+                enemyBase.health -= damage;
+                if (enemyBase.health <= 0)
                     photonView.RPC("RemoveLimb", PhotonTargets.All, i);
                 break;
             }
 
         if (normalDamage)
-            health -= damage;
-
-        photonView.RPC("ChangeHealth", PhotonTargets.All, health, damagePoint, force);
+            enemyBase.health -= damage;
+        photonView.RPC("DamagedAggroSafe", PhotonTargets.All, damage, damager);
+        photonView.RPC("ChangeHealth", PhotonTargets.All, enemyBase.health, damagePoint, force);
     }
 
     [PunRPC,HideInInspector]
     public void ChangeHealth(float currentHealth, Vector3 damagePoint, float force)
     {
-        health = currentHealth;
+        enemyBase.health = currentHealth;
 
-        if (health <= 0)
+        if (enemyBase.health <= 0)
         {
             ToggleRagdoll(true);
             foreach (Rigidbody rig in ragdollBones)

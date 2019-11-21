@@ -1896,12 +1896,12 @@ MonoBehaviour:
   - {fileID: 2305329244645042325}
   - {fileID: 2305329243536320814}
   - {fileID: 2305329243317636307}
-  health: 1
   ragdollpartRemovalForce: 200
   animator: {fileID: 3751106739351640597}
   source: {fileID: 2305329244943762715}
   bodyLifeTime: 9
   died: 0
+  enemyBase: {fileID: 2311968091669715239}
 --- !u!114 &2305329243681090280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1949,6 +1949,10 @@ MonoBehaviour:
   playerTag: Player
   targetZone: 2.44
   attackZone: 1.23
+  health: 140
+  minimalTargetingDamage: 40
+  targetingDamageDropOff: 4
+  damageInfo: []
   lerpSpeed: 9
 --- !u!195 &4003967117261096238
 NavMeshAgent:
