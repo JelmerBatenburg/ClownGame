@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WeaponBase : Photon.MonoBehaviour
 {
-    public WeaponStatsScriptableObject[] weapons;
+    public CharacterMovement character;
     public int currentWeapon;
     public bool activeFire;
     public int currentAmmo;
@@ -22,6 +22,19 @@ public class WeaponBase : Photon.MonoBehaviour
     public WeaponObjectInformation info;
     public string reloadInput;
 
+    public void Start()
+    {
+        DisplayWeapon();
+    }
+
+    public void DisplayWeapon()
+    {
+        foreach (Transform child in weapon)
+            Destroy(child.gameObject);
+        GameObject weaponObject = Instantiate(character.currentClass.weapons[currentWeapon].weaponObject, weapon.transform.position, weapon.transform.rotation, weapon);
+        info = weaponObject.GetComponent<WeaponObjectInformation>();
+    }
+
     public void WeaponSway()
     {
         if (photonView.isMine)
@@ -34,7 +47,7 @@ public class WeaponBase : Photon.MonoBehaviour
     {
         if (!activeFire && Input.GetButtonDown("Fire1") && photonView.isMine && currentAmmo > 0)
             StartCoroutine(Shooting());
-        if (!activeFire && Input.GetButtonDown(reloadInput) && photonView.isMine && currentAmmo != weapons[currentWeapon].clipSize)
+        if (!activeFire && Input.GetButtonDown(reloadInput) && photonView.isMine && currentAmmo != character.currentClass.weapons[currentWeapon].clipSize)
             StartCoroutine(Reload());
         WeaponSway();
     }
@@ -43,22 +56,22 @@ public class WeaponBase : Photon.MonoBehaviour
     {
         activeFire = true;
         info.animator.SetTrigger("Reload");
-        yield return new WaitForSeconds(weapons[currentWeapon].reloadSpeed);
+        yield return new WaitForSeconds(character.currentClass.weapons[currentWeapon].reloadSpeed);
         activeFire = false;
-        currentAmmo = weapons[currentWeapon].clipSize;
+        currentAmmo = character.currentClass.weapons[currentWeapon].clipSize;
     }
 
     public IEnumerator Shooting()
     {
         activeFire = true;
-
-        switch (weapons[currentWeapon].fireType)
+        WeaponStatsScriptableObject stats = character.currentClass.weapons[currentWeapon];
+        switch (stats.fireType)
         {
             case WeaponStatsScriptableObject.FireType.burst:
-                for (int i = 0; i < weapons[currentWeapon].burstRounds; i++)
+                for (int i = 0; i < stats.burstRounds; i++)
                 {
                     Shoot();
-                    yield return new WaitForSeconds(weapons[currentWeapon].burstFireDelay);
+                    yield return new WaitForSeconds(stats.burstFireDelay);
                 }
                 break;
             default:
@@ -66,8 +79,8 @@ public class WeaponBase : Photon.MonoBehaviour
                 break;
         }
 
-        yield return new WaitForSeconds(weapons[currentWeapon].fireRate);
-        if (Input.GetButton("Fire1") && weapons[currentWeapon].fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo > 0) 
+        yield return new WaitForSeconds(stats.fireRate);
+        if (Input.GetButton("Fire1") && stats.fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo > 0) 
             StartCoroutine(Shooting());
         else
             activeFire = false;
@@ -75,37 +88,42 @@ public class WeaponBase : Photon.MonoBehaviour
 
     public void Shoot()
     {
-        switch (weapons[currentWeapon].projectileType)
+        WeaponStatsScriptableObject stats = character.currentClass.weapons[currentWeapon];
+        switch (stats.projectileType)
         {
             case WeaponStatsScriptableObject.ProjectileType.rayCast:
                 RaycastHit hit = new RaycastHit();
-                source.PlayOneShot(weapons[currentWeapon].clip);
-                if (Physics.Raycast(Camera.main.transform.position, getSpreadDirection(Camera.main.transform.forward,weapons[currentWeapon].spread), out hit, weapons[currentWeapon].raycastFireLength))
-                    if(hit.transform.tag == enemyTag && !weapons[currentWeapon].explodingBullets)
-                    {
-                        GameObject currentObject = hit.transform.gameObject;
-                        while (!currentObject.GetComponent<RemovableLimbs>())
-                            currentObject = currentObject.transform.parent.gameObject;
-                        currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, weapons[currentWeapon].damage, hit.point - Camera.main.transform.forward, weapons[currentWeapon].force, PhotonNetwork.playerName);
-                    }
-                    else if(weapons[currentWeapon].explodingBullets)
-                    {
-                        Collider[] enemyParts = Physics.OverlapSphere(hit.point, weapons[currentWeapon].explosionRadius, enemyMask);
-                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("CallScreenShake", PhotonTargets.All, weapons[currentWeapon].explosionScreenShakeTime, weapons[currentWeapon].explosionScreenShakeIntensity, hit.point);
-                        foreach(Collider col in enemyParts)
+                source.PlayOneShot(stats.clip);
+                int bulletAmount = stats.multipleShots ? stats.shotAmount : 1;
+                for (int i = 0; i < bulletAmount; i++)
+                {
+                    if (Physics.Raycast(Camera.main.transform.position, getSpreadDirection(Camera.main.transform.forward, stats.spread), out hit, stats.raycastFireLength))
+                        if (hit.transform.tag == enemyTag && !stats.explodingBullets)
                         {
-                            GameObject currentObject = col.gameObject;
+                            GameObject currentObject = hit.transform.gameObject;
                             while (!currentObject.GetComponent<RemovableLimbs>())
                                 currentObject = currentObject.transform.parent.gameObject;
-                            Vector3 explosionPoint = hit.point + (Vector3.down / 3) - (Camera.main.transform.forward / 4);
-                            currentObject.GetComponent<RemovableLimbs>().DoDamage(col, weapons[currentWeapon].explosionDamage, explosionPoint, weapons[currentWeapon].force, PhotonNetwork.playerName);
+                            currentObject.GetComponent<RemovableLimbs>().DoDamage(hit.collider, stats.damage, hit.point - Camera.main.transform.forward, stats.force, PhotonNetwork.playerName);
                         }
-                        GameObject.FindWithTag("Manager").GetPhotonView().RPC("SpawnParticle", PhotonTargets.All, weapons[currentWeapon].explosionParticleIndex, hit.point, Quaternion.identity, null);
-                    }
+                        else if (stats.explodingBullets)
+                        {
+                            Collider[] enemyParts = Physics.OverlapSphere(hit.point, stats.explosionRadius, enemyMask);
+                            GameObject.FindWithTag("Manager").GetPhotonView().RPC("CallScreenShake", PhotonTargets.All, stats.explosionScreenShakeTime, stats.explosionScreenShakeIntensity, hit.point);
+                            foreach (Collider col in enemyParts)
+                            {
+                                GameObject currentObject = col.gameObject;
+                                while (!currentObject.GetComponent<RemovableLimbs>())
+                                    currentObject = currentObject.transform.parent.gameObject;
+                                Vector3 explosionPoint = hit.point + (Vector3.down / 3) - (Camera.main.transform.forward / 4);
+                                currentObject.GetComponent<RemovableLimbs>().DoDamage(col, stats.explosionDamage, explosionPoint, stats.force, PhotonNetwork.playerName);
+                            }
+                            GameObject.FindWithTag("Manager").GetPhotonView().RPC("SpawnParticle", PhotonTargets.All, stats.explosionParticleIndex, hit.point, Quaternion.identity, null);
+                        }
+                }
                 break;
         }
         currentAmmo--;
-        photonView.RPC("Recoil", PhotonTargets.All, weapons[currentWeapon].backwardsRecoil, weapons[currentWeapon].horizontalRotationRecoil);
+        photonView.RPC("Recoil", PhotonTargets.All, stats.backwardsRecoil, stats.horizontalRotationRecoil);
     }
 
     public static Vector3 getSpreadDirection(Vector3 dir, float spread)
@@ -122,8 +140,8 @@ public class WeaponBase : Photon.MonoBehaviour
     [PunRPC]
     public void Recoil(float backwardsRecoil,float horizontalRecoil)
     {
-        float verticalRecoil = weapons[currentWeapon].cameraRecoil * Random.Range(-0.5f, -1f);
-        float horizontalCamRecoil = weapons[currentWeapon].camereHorizontalRecoil * Random.Range(-1f, 1f);
+        float verticalRecoil = character.currentClass.weapons[currentWeapon].cameraRecoil * Random.Range(-0.5f, -1f);
+        float horizontalCamRecoil = character.currentClass.weapons[currentWeapon].camereHorizontalRecoil * Random.Range(-1f, 1f);
 
         cam.parent.Rotate(Vector3.right * verticalRecoil);
         cam.Rotate(-Vector3.right * verticalRecoil * 0.35f);

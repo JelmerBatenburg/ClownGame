@@ -33,6 +33,10 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public int projectileAmount = 1;
     public float force = 140;
 
+    [Header("MultipleShots")]
+    public bool multipleShots;
+    public int shotAmount;
+
     [Header("BurstFireStats")]
     public float burstFireDelay;
     public int burstRounds;

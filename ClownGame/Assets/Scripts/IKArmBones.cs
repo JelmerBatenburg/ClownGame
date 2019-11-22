@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class IKArmBones : MonoBehaviour
 {
-    public Transform rightHandLocation,leftHandLocation;
+    public WeaponBase weaponBase;
     private Animator animator;
     public Transform lookLocation;
 
@@ -19,6 +19,8 @@ public class IKArmBones : MonoBehaviour
 
     void OnAnimatorIK()
     {
+        Transform rightHandLocation = (weaponBase)? weaponBase.info.handRight : null;
+        Transform leftHandLocation = (weaponBase) ? weaponBase.info.handLeft : null;
         if (animator && useIK)
         {
             if (lookLocation != null)

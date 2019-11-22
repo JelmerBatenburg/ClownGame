@@ -5,11 +5,10 @@ using UnityEngine;
 public class CharacterMovement : Photon.MonoBehaviour
 {
     [Header("Movement")]
-    public float movementSpeed;
+    public ClassScriptableObject currentClass;
     Vector3 movementDirection;
     public float health;
     [Header("GroundDetection")]
-    public float jumpHeight;
     public string jumpInput;
     public float downwardsRaycastRange;
     public LayerMask groundMask;
@@ -86,9 +85,9 @@ public class CharacterMovement : Photon.MonoBehaviour
         {
             movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             if (Input.GetButtonDown(jumpInput))
-                rig.velocity += Vector3.up * jumpHeight;
+                rig.velocity += Vector3.up * currentClass.jumpHeight;
         }
-        transform.Translate(movementDirection * Time.deltaTime * movementSpeed);
+        transform.Translate(movementDirection * Time.deltaTime * currentClass.movementSpeed);
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

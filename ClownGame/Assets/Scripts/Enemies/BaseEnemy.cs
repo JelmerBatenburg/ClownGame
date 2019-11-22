@@ -29,12 +29,13 @@ public class BaseEnemy : Photon.MonoBehaviour
 
     public void Start()
     {
-        FindNearestTarget();
         if (!photonView.isMine)
         {
             agent.enabled = false;
             StartCoroutine(LerpPosition());
         }
+        else
+            FindNearestTarget();
     }
 
     [PunRPC,HideInInspector]
@@ -96,10 +97,11 @@ public class BaseEnemy : Photon.MonoBehaviour
 
     public void FindNearestTarget()
     {
+        Debug.Log("Looking");
         GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
-        currentTarget = players[0].transform;
-        for (int i = 1; i < players.Length; i++)
-            if (Vector3.Distance(transform.position, players[i].transform.position) <= Vector3.Distance(transform.position, currentTarget.position))
+        currentTarget = null;
+        for (int i = 0; i < players.Length; i++)
+            if (!currentTarget || Vector3.Distance(transform.position, players[i].transform.position) <= Vector3.Distance(transform.position, currentTarget.position))
                 currentTarget = players[i].transform;
     }
 
@@ -131,7 +133,7 @@ public class BaseEnemy : Photon.MonoBehaviour
             transform.LookAt(new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z));
             StartCoroutine(Attack());
         }
-        else if (!activeAttack && currentTarget)
+        else if (!activeAttack && currentTarget != null)
             agent.SetDestination(currentTarget.transform.position);
         else if (!currentTarget)
             FindNearestTarget();
