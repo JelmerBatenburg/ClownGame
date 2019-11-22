@@ -1950,6 +1950,10 @@ MonoBehaviour:
   targetZone: 2.44
   attackZone: 1.23
   health: 140
+  activeAttack: 0
+  attackTime: 0.3
+  damage: 6
+  recoveryTime: 0.1
   minimalTargetingDamage: 40
   targetingDamageDropOff: 4
   damageInfo: []

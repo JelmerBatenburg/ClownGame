@@ -125,14 +125,17 @@ public class BaseEnemy : Photon.MonoBehaviour
             currentTarget = lowestPlayer.transform;
         }
 
-        if (Vector3.Distance(currentTarget.position, transform.position) < attackZone && !activeAttack)
+        if (currentTarget && Vector3.Distance(currentTarget.position, transform.position) < attackZone && !activeAttack)
         {
             agent.SetDestination(transform.position);
             transform.LookAt(new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z));
             StartCoroutine(Attack());
         }
-        else if (!activeAttack)
+        else if (!activeAttack && currentTarget)
             agent.SetDestination(currentTarget.transform.position);
+        else if (!currentTarget)
+            FindNearestTarget();
+
     }
 
     public virtual IEnumerator Attack()
@@ -141,7 +144,7 @@ public class BaseEnemy : Photon.MonoBehaviour
         //Doe animatie als er animatie is
         yield return new WaitForSeconds(attackTime);
         if (Vector3.Distance(transform.position, new Vector3(currentTarget.transform.position.x, transform.position.y, currentTarget.transform.position.z)) <= attackZone)
-            Debug.Log("Damage");
+            currentTarget.gameObject.GetPhotonView().RPC("DoDamage", PhotonTargets.All, damage);
         yield return new WaitForSeconds(recoveryTime);
         activeAttack = false;
     }

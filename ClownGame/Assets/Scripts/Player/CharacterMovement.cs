@@ -34,7 +34,8 @@ public class CharacterMovement : Photon.MonoBehaviour
             if (health <= damage)
             {
                 PhotonNetwork.Destroy(gameObject);
-                GameObject.FindWithTag("Manager").GetComponent<Manager>().SpawnPlayer();
+                Manager manager = GameObject.FindWithTag("Manager").GetComponent<Manager>();
+                manager.StartCoroutine(manager.SpawnPlayer());
             }
         }
     }
