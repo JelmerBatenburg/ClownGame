@@ -8,7 +8,6 @@ public class WeaponStatsScriptableObject : ScriptableObject
 {
     [Header("Visuals")]
     public GameObject weaponObject;
-    public RuntimeAnimatorController controller;
 
     [Header("CameraFeedbackStats")]
     public float explosionScreenShakeTime;

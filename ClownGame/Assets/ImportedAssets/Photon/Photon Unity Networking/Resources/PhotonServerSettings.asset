@@ -48,4 +48,5 @@ MonoBehaviour:
   - CallScreenShake
   - DoDamage
   - DamagedAggroSafe
+  - DisplayWeapon
   DisableAutoOpenWizard: 1

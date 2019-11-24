@@ -12,6 +12,6 @@ public class ResetEnemy : Photon.MonoBehaviour
     public void Update()
     {
         if (Input.GetButtonDown(input))
-            PhotonNetwork.Instantiate(enemy, spawnspot.position, spawnspot.rotation, 0);
+            PhotonNetwork.InstantiateSceneObject(enemy, spawnspot.position, spawnspot.rotation, 0, new object[0]);
     }
 }

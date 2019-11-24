@@ -5,9 +5,9 @@ using UnityEngine;
 public class WeaponBase : Photon.MonoBehaviour
 {
     public CharacterMovement character;
+    public int[] weaponAmmo;
     public int currentWeapon;
-    public bool activeFire;
-    public int currentAmmo;
+    public bool disableInteraction;
     public Transform weapon;
     public Transform cam;
     public string enemyTag;
@@ -24,15 +24,26 @@ public class WeaponBase : Photon.MonoBehaviour
 
     public void Start()
     {
-        DisplayWeapon();
+        if (photonView.isMine)
+            photonView.RPC("DisplayWeapon", PhotonTargets.All, currentWeapon);
+        weaponAmmo = new int[character.currentClass.weapons.Length];
+        for (int i = 0; i < weaponAmmo.Length; i++)
+            weaponAmmo[i] = character.currentClass.weapons[i].clipSize;
     }
 
-    public void DisplayWeapon()
+    [PunRPC, HideInInspector]
+    public void DisplayWeapon(int index)
     {
         foreach (Transform child in weapon)
             Destroy(child.gameObject);
-        GameObject weaponObject = Instantiate(character.currentClass.weapons[currentWeapon].weaponObject, weapon.transform.position, weapon.transform.rotation, weapon);
+        GameObject weaponObject = Instantiate(character.currentClass.weapons[index].weaponObject, weapon.transform.position, weapon.transform.rotation, weapon);
         info = weaponObject.GetComponent<WeaponObjectInformation>();
+    }
+
+    public void OnPlayerEnteredRoom(PhotonPlayer newPlayer)
+    {
+        if (photonView.isMine)
+            photonView.RPC("DisplayWeapon", PhotonTargets.All, currentWeapon);
     }
 
     public void WeaponSway()
@@ -45,25 +56,52 @@ public class WeaponBase : Photon.MonoBehaviour
 
     public void Update()
     {
-        if (!activeFire && Input.GetButtonDown("Fire1") && photonView.isMine && currentAmmo > 0)
-            StartCoroutine(Shooting());
-        if (!activeFire && Input.GetButtonDown(reloadInput) && photonView.isMine && currentAmmo != character.currentClass.weapons[currentWeapon].clipSize)
-            StartCoroutine(Reload());
-        WeaponSway();
+        if (photonView.isMine)
+        {
+            if (!disableInteraction && Input.GetButtonDown("Fire1") && weaponAmmo[currentWeapon] > 0)
+                StartCoroutine(Shooting());
+            if (!disableInteraction && Input.GetButtonDown(reloadInput) && weaponAmmo[currentWeapon] != character.currentClass.weapons[currentWeapon].clipSize)
+                StartCoroutine(Reload());
+            WeaponSway();
+            if (Input.GetAxis("Mouse ScrollWheel") != 0 && !disableInteraction)
+                Swap(-1, Input.GetAxis("Mouse ScrollWheel"));
+        }
+    }
+
+    public void Swap(int index = -1, float scrollValue = 0)
+    {
+        if (index == -1)
+        {
+            if (scrollValue > 0)
+                if (currentWeapon == character.currentClass.weapons.Length - 1)
+                    currentWeapon = 0;
+                else
+                    currentWeapon++;
+            else if (currentWeapon == 0)
+                currentWeapon = character.currentClass.weapons.Length - 1;
+            else
+                currentWeapon--;
+            photonView.RPC("DisplayWeapon", PhotonTargets.All, currentWeapon);
+        }
+        else
+        {
+            currentWeapon = index;
+            photonView.RPC("DisplayWeapon", PhotonTargets.All, currentWeapon);
+        }
     }
 
     public IEnumerator Reload()
     {
-        activeFire = true;
+        disableInteraction = true;
         info.animator.SetTrigger("Reload");
         yield return new WaitForSeconds(character.currentClass.weapons[currentWeapon].reloadSpeed);
-        activeFire = false;
-        currentAmmo = character.currentClass.weapons[currentWeapon].clipSize;
+        disableInteraction = false;
+        weaponAmmo[currentWeapon] = character.currentClass.weapons[currentWeapon].clipSize;
     }
 
     public IEnumerator Shooting()
     {
-        activeFire = true;
+        disableInteraction = true;
         WeaponStatsScriptableObject stats = character.currentClass.weapons[currentWeapon];
         switch (stats.fireType)
         {
@@ -80,10 +118,10 @@ public class WeaponBase : Photon.MonoBehaviour
         }
 
         yield return new WaitForSeconds(stats.fireRate);
-        if (Input.GetButton("Fire1") && stats.fireType == WeaponStatsScriptableObject.FireType.auto && currentAmmo > 0) 
+        if (Input.GetButton("Fire1") && stats.fireType == WeaponStatsScriptableObject.FireType.auto && weaponAmmo[currentWeapon] > 0) 
             StartCoroutine(Shooting());
         else
-            activeFire = false;
+            disableInteraction = false;
     }
 
     public void Shoot()
@@ -122,7 +160,7 @@ public class WeaponBase : Photon.MonoBehaviour
                 }
                 break;
         }
-        currentAmmo--;
+        weaponAmmo[currentWeapon]--;
         photonView.RPC("Recoil", PhotonTargets.All, stats.backwardsRecoil, stats.horizontalRotationRecoil);
     }
 
