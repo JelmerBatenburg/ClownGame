@@ -7136,7 +7136,7 @@ MonoBehaviour:
     type: 3}
   roomsUIObject: {fileID: 1216103626}
   roomUI: {fileID: 491260156}
-  gameScene: Greybox
+  gameScene: Greybox Liting
 --- !u!4 &1454141289
 Transform:
   m_ObjectHideFlags: 0

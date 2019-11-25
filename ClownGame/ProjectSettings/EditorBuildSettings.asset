@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 4291746895ce8484ab4d75019aff4012
+  - enabled: 1
+    path: Assets/Scenes/Greybox Liting.unity
+    guid: d7105e007463ede4882a03221de4a3b1
   m_configObjects: {}
