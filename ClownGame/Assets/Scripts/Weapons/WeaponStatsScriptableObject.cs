@@ -45,15 +45,16 @@ public class WeaponStatsScriptableObject : ScriptableObject
     public bool piercing;
     public float bulletHealth;
     public bool explodingBullets;
+
+    [Header("ExplosionInfo")]
     public float explosionDamage;
     public float explosionRadius;
     public int explosionParticleIndex;
+    public float explosionTimer;
 
     [Header("ProjectileWeapons")]
-    public float gravity;
-    public float lifeTime;
-    public int bounces;
-    public float bounceStrenght;
+    public float fireStrenght;
+    public string projectileName;
 
     public enum FireType
     {

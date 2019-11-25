@@ -133,12 +133,12 @@ public class WeaponBase : Photon.MonoBehaviour
     public void Shoot()
     {
         WeaponStatsScriptableObject stats = character.currentClass.weapons[currentWeapon];
+        source.PlayOneShot(stats.clip);
+        int bulletAmount = stats.multipleShots ? stats.shotAmount : 1;
         switch (stats.projectileType)
         {
             case WeaponStatsScriptableObject.ProjectileType.rayCast:
                 RaycastHit hit = new RaycastHit();
-                source.PlayOneShot(stats.clip);
-                int bulletAmount = stats.multipleShots ? stats.shotAmount : 1;
                 for (int i = 0; i < bulletAmount; i++)
                 {
                     if (Physics.Raycast(Camera.main.transform.position, getSpreadDirection(Camera.main.transform.forward, stats.spread), out hit, stats.raycastFireLength))
@@ -163,6 +163,14 @@ public class WeaponBase : Photon.MonoBehaviour
                             }
                             GameObject.FindWithTag("Manager").GetPhotonView().RPC("SpawnParticle", PhotonTargets.All, stats.explosionParticleIndex, hit.point, Quaternion.identity, null);
                         }
+                }
+                break;
+            case WeaponStatsScriptableObject.ProjectileType.projectile:
+                source.PlayOneShot(stats.clip);
+                for (int i = 0; i < bulletAmount; i++)
+                {
+                    GameObject g = PhotonNetwork.Instantiate(stats.projectileName, info.firePoint.position, info.firePoint.rotation, 0);
+                    g.GetPhotonView().RPC("SetInformation", PhotonTargets.All, stats.explosionTimer, getSpreadDirection(Camera.main.transform.forward, stats.spread), stats.fireStrenght, stats.explosionDamage, stats.explosionRadius, stats.explosionParticleIndex, stats.force);
                 }
                 break;
         }

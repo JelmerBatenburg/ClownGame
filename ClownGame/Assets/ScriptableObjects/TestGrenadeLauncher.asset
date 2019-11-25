@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07d527ea620bd14f84bf67561991943, type: 3}
+  m_Name: TestGrenadeLauncher
+  m_EditorClassIdentifier: 
+  weaponObject: {fileID: 8091952899627886417, guid: 967098924c9a8c64eb0b3e68d4d5cab9,
+    type: 3}
+  explosionScreenShakeTime: 0
+  explosionScreenShakeIntensity: 0
+  cameraRecoil: 6
+  camereHorizontalRecoil: 1
+  fireType: 1
+  projectileType: 1
+  clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
+  damage: 45
+  fireRate: 0.4
+  spread: 4
+  horizontalRotationRecoil: 1
+  backwardsRecoil: 1
+  clipSize: 16
+  maxAmmoPouchSize: 160
+  reloadSpeed: 0
+  projectileAmount: 1
+  force: 140
+  multipleShots: 1
+  shotAmount: 6
+  burstFireDelay: 0
+  burstRounds: 0
+  raycastFireLength: 0
+  piercing: 0
+  bulletHealth: 0
+  explodingBullets: 0
+  explosionDamage: 25
+  explosionRadius: 3
+  explosionParticleIndex: 1
+  explosionTimer: 2
+  fireStrenght: 1000
+  projectileName: Grenade

@@ -51,4 +51,7 @@ MonoBehaviour:
   - DisplayWeapon
   - StartReload
   - StartAnimation
+  - SpawnEnemy
+  - SetInformation
+  - PlaySound
   DisableAutoOpenWizard: 1

@@ -95,6 +95,12 @@ public class BaseEnemy : Photon.MonoBehaviour
         }
     }
 
+    public void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+    {
+        if (photonView.isMine)
+            FindNearestTarget();
+    }
+
     public void FindNearestTarget()
     {
         Debug.Log("Looking");
