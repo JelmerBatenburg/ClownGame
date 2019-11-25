@@ -22,11 +22,11 @@ MonoBehaviour:
   projectileType: 1
   clip: {fileID: 8300000, guid: c5fe1c050cd28024d9f396a1f4c90333, type: 3}
   damage: 45
-  fireRate: 0.4
+  fireRate: 0.05
   spread: 4
   horizontalRotationRecoil: 1
   backwardsRecoil: 1
-  clipSize: 16
+  clipSize: 400
   maxAmmoPouchSize: 160
   reloadSpeed: 0
   projectileAmount: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
   explodingBullets: 0
   explosionDamage: 25
   explosionRadius: 3
-  explosionParticleIndex: 1
+  explosionParticleIndex: 2
   explosionTimer: 2
   fireStrenght: 1000
   projectileName: Grenade
