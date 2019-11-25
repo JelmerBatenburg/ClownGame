@@ -13,6 +13,8 @@ public class WeaponBase : Photon.MonoBehaviour
     public string enemyTag;
     public AudioSource source;
     public LayerMask enemyMask;
+    public GameObject muzzleflash;
+    public float muzzleFlashLifeTime;
     [Header("WeaponSway")]
     public float weaponSwayStrenght;
     public float weaponLerpSpeed;
@@ -192,6 +194,7 @@ public class WeaponBase : Photon.MonoBehaviour
     [PunRPC]
     public void Recoil(float backwardsRecoil,float horizontalRecoil)
     {
+        Destroy(Instantiate(muzzleflash, info.firePoint.position, info.firePoint.rotation, info.firePoint), muzzleFlashLifeTime);
         float verticalRecoil = character.currentClass.weapons[currentWeapon].cameraRecoil * Random.Range(-0.5f, -1f);
         float horizontalCamRecoil = character.currentClass.weapons[currentWeapon].camereHorizontalRecoil * Random.Range(-1f, 1f);
 

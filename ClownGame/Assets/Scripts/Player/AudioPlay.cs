@@ -15,9 +15,10 @@ public class AudioPlay : Photon.MonoBehaviour
     }
 
     [PunRPC,HideInInspector]
-    public void PlaySound(int index, int maxIndex = 0)
+    public void PlaySound(bool overlay, int index, int maxIndex = 0)
     {
-        source.Stop();
+        if(!overlay)
+            source.Stop();
         if (maxIndex != 0)
             index = Random.Range(index, maxIndex);
         source.pitch = normalPitch + Random.Range(-range, range);

@@ -456,7 +456,7 @@ Rigidbody:
   m_GameObject: {fileID: 9190777465779036081}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 3
+  m_Drag: 0.6
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -500,6 +500,9 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 1024
+  muzzleflash: {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260,
+    type: 3}
+  muzzleFlashLifeTime: 1
   weaponSwayStrenght: 0.4
   weaponLerpSpeed: 8
   weaponJumpWeight: 1
@@ -526,8 +529,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 3.46
+  MaxDistance: 61.47
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -650,7 +653,10 @@ MonoBehaviour:
   force: 300
   damage: 46
   grenadeInput: GrenadeThrow
-  grenadeThrowSounds: {x: 0, y: 4}
+  grenadeThrowSounds: {x: 0, y: 3}
+  throwSounds: 4
+  delay: 0
+  throwDelay: 1
 --- !u!114 &-1338458166513959339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -671,7 +677,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eaee2ee372e5e3742b8af88cf829a31e, type: 3}
   - {fileID: 8300000, guid: f243c4a8aef277048a4d1cc452e24a6b, type: 3}
   - {fileID: 8300000, guid: 56465664b40a70347af32a3c7464c8db, type: 3}
-  - {fileID: 8300000, guid: c5fe1c050cd28024d9f396a1f4c90333, type: 3}
+  - {fileID: 8300000, guid: 4f5b607ac0d067a4b97c4fef6ea0d0df, type: 3}
 --- !u!1 &9190777466958200352
 GameObject:
   m_ObjectHideFlags: 0

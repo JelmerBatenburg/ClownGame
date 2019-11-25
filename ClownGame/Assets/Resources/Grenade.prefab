@@ -433,7 +433,7 @@ MonoBehaviour:
   visual: {fileID: 5834615777576550715}
   rotation: {x: 0, y: 0, z: 0}
   rotationSpeed: 45
-  collisionCheckSize: 0.1
+  collisionCheckSize: 0.14
 --- !u!114 &-6191153056602459280
 MonoBehaviour:
   m_ObjectHideFlags: 0
