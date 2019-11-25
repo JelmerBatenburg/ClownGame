@@ -49,4 +49,6 @@ MonoBehaviour:
   - DoDamage
   - DamagedAggroSafe
   - DisplayWeapon
+  - StartReload
+  - StartAnimation
   DisableAutoOpenWizard: 1

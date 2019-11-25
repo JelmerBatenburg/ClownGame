@@ -62,10 +62,10 @@ public class WeaponBase : Photon.MonoBehaviour
                 StartCoroutine(Shooting());
             if (!disableInteraction && Input.GetButtonDown(reloadInput) && weaponAmmo[currentWeapon] != character.currentClass.weapons[currentWeapon].clipSize)
                 StartCoroutine(Reload());
-            WeaponSway();
             if (Input.GetAxis("Mouse ScrollWheel") != 0 && !disableInteraction)
                 Swap(-1, Input.GetAxis("Mouse ScrollWheel"));
         }
+        WeaponSway();
     }
 
     public void Swap(int index = -1, float scrollValue = 0)
@@ -93,10 +93,16 @@ public class WeaponBase : Photon.MonoBehaviour
     public IEnumerator Reload()
     {
         disableInteraction = true;
-        info.animator.SetTrigger("Reload");
+        photonView.RPC("StartAnimation", PhotonTargets.All, "Reload");
         yield return new WaitForSeconds(character.currentClass.weapons[currentWeapon].reloadSpeed);
         disableInteraction = false;
         weaponAmmo[currentWeapon] = character.currentClass.weapons[currentWeapon].clipSize;
+    }
+
+    [PunRPC,HideInInspector]
+    public void StartAnimation(string animation)
+    {
+        info.animator.SetTrigger(animation);
     }
 
     public IEnumerator Shooting()
