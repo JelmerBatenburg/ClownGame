@@ -7146,6 +7146,7 @@ MonoBehaviour:
   particles:
   - {fileID: 4007459326729599115, guid: 1876c9ee03b46614080b2fa3cf2f80a0, type: 3}
   - {fileID: 8444605110555244687, guid: 01439ab8cd2242e49bd84cfb6c0e5a7c, type: 3}
+  - {fileID: 6802049207792272562, guid: 779e9676acb4dd84b891649b137e40e7, type: 3}
   particleLifetime: 2
 --- !u!4 &817396956
 Transform:

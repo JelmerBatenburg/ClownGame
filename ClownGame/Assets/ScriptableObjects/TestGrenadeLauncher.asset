@@ -20,7 +20,7 @@ MonoBehaviour:
   camereHorizontalRecoil: 1
   fireType: 1
   projectileType: 1
-  clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
+  clip: {fileID: 8300000, guid: c5fe1c050cd28024d9f396a1f4c90333, type: 3}
   damage: 45
   fireRate: 0.4
   spread: 4

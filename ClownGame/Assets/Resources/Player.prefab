@@ -646,7 +646,7 @@ MonoBehaviour:
   timer: 1.6
   throwStrenght: 1200
   explosionRange: 3
-  explosionParticle: 1
+  explosionParticle: 2
   force: 300
   damage: 46
   grenadeInput: GrenadeThrow

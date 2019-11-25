@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponObject: {fileID: 6514742438935635872, guid: da534c24e7401ba4882c6508272b36a3,
     type: 3}
-  controller: {fileID: 0}
   explosionScreenShakeTime: 0.07
   explosionScreenShakeIntensity: 0.12
   cameraRecoil: 3
   camereHorizontalRecoil: 1
   fireType: 1
   projectileType: 0
-  clip: {fileID: 8300000, guid: 8b0561da812cd8945a68863b841b44e9, type: 3}
+  clip: {fileID: 8300000, guid: da63684f37136a245bd27d669e29b4f6, type: 3}
   damage: 25
   fireRate: 0.3
   spread: 0.8
@@ -43,7 +42,6 @@ MonoBehaviour:
   explosionDamage: 1
   explosionRadius: 2.4
   explosionParticleIndex: 0
-  gravity: 0
-  lifeTime: 0
-  bounces: 0
-  bounceStrenght: 0
+  explosionTimer: 0
+  fireStrenght: 0
+  projectileName: 
