@@ -684,7 +684,7 @@ MonoBehaviour:
   heightOffset: 1.1
   groundCheckOffset: 0.08
   offsetExtraLenght: 1
-  maxStepHeight: 0.25
+  maxStepHeight: 0.34
   detectRadius: 0.66
   centerOffset: 1.01
   gravity: 14

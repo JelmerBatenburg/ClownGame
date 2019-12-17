@@ -5804,7 +5804,8 @@ MonoBehaviour:
   chatMessage: {fileID: 2189404519486681656, guid: f66479fae73556f448e659aba32f653e,
     type: 3}
   chatLayout: {fileID: 1394137411}
-  chatMessageLifetime: 2
+  chatMessageLifetime: 4
+  continueTyping: 1
 --- !u!114 &1185250900
 MonoBehaviour:
   m_ObjectHideFlags: 0

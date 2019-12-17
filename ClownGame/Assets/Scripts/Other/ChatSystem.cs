@@ -9,11 +9,17 @@ public class ChatSystem : Photon.MonoBehaviour
     public GameObject chatMessage;
     public Transform chatLayout;
     public float chatMessageLifetime;
+    public bool continueTyping;
 
     public void SendMessage()
     {
-        photonView.RPC("MessageRecieve", PhotonTargets.All, inputField.text);
-        inputField.text = "";
+        if (Input.GetButtonDown("Submit") && inputField.text != "")
+        {
+            photonView.RPC("MessageRecieve", PhotonTargets.All, PhotonNetwork.playerName + ": " + inputField.text);
+            inputField.text = "";
+            if (continueTyping)
+                inputField.ActivateInputField();
+        }
     }
 
     [PunRPC,HideInInspector]
