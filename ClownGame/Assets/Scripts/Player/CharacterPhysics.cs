@@ -44,8 +44,8 @@ public class CharacterPhysics : Photon.MonoBehaviour
         {
             Vector3 dir = (col.ClosestPoint(checkpos) - checkpos).normalized;
             Debug.DrawRay(checkpos, dir, Color.red);
-            if (Physics.Raycast(checkpos, dir, out hit, detectionMask) && hit.transform.gameObject == col.gameObject && Vector3.Dot(force.normalized, hit.normal) < 0)
-                force += dir * (Vector3.Distance(force, Vector3.zero) * Vector3.Dot(force.normalized, hit.normal));
+            if (Physics.Raycast(checkpos, dir, out hit, detectionMask) && hit.transform.gameObject == col.gameObject && Vector3.Dot(force.normalized, dir) > 0)
+                force -= dir * (Vector3.Distance(force, Vector3.zero) * Vector3.Dot(force.normalized, dir));
         }
     }
 

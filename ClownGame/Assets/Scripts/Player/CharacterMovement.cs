@@ -81,14 +81,12 @@ public class CharacterMovement : Photon.MonoBehaviour
 
     public void Move()
     {
-        if (physics.onGround)
-        {
-            movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            movementDirection = transform.TransformDirection(movementDirection);
-            physics.force += movementDirection * Time.deltaTime * currentClass.movementSpeed;
-            if (Input.GetButtonDown(jumpInput))
-                physics.force += Vector3.up * currentClass.jumpHeight;
-        }
+        movementDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        movementDirection = transform.TransformDirection(movementDirection);
+        physics.force += movementDirection * Time.deltaTime * (physics.onGround ? currentClass.movementSpeed : currentClass.airControl);
+
+        if (Input.GetButtonDown(jumpInput) && physics.onGround)
+            physics.force += Vector3.up * currentClass.jumpHeight;
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

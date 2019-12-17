@@ -684,12 +684,12 @@ MonoBehaviour:
   heightOffset: 1.1
   groundCheckOffset: 0.08
   offsetExtraLenght: 1
-  maxStepHeight: 0.5
+  maxStepHeight: 0.25
   detectRadius: 0.66
   centerOffset: 1.01
   gravity: 14
   airDrag: 0.5
-  groundDrag: 14
+  groundDrag: 6
   onGround: 1
   fallMultiplier: 1.2
 --- !u!1 &9190777466958200352
