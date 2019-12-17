@@ -54,4 +54,5 @@ MonoBehaviour:
   - SpawnEnemy
   - SetInformation
   - PlaySound
+  - MessageRecieve
   DisableAutoOpenWizard: 1
