@@ -16,5 +16,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e47fd1436f951f04bb4f7a0567af7416, type: 2}
   - {fileID: 11400000, guid: 8a22b7666fab6024895c4d0e5cfb5d81, type: 2}
   maxHealth: 100
-  movementSpeed: 7
-  jumpHeight: 5
+  movementSpeed: 85
+  jumpHeight: 7

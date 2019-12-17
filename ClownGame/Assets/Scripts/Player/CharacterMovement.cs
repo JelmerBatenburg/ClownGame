@@ -12,7 +12,7 @@ public class CharacterMovement : Photon.MonoBehaviour
     public string jumpInput;
     public float downwardsRaycastRange;
     public LayerMask groundMask;
-    public Rigidbody rig;
+    public CharacterPhysics physics;
     [Header("Rotation")]
     public Transform cam;
     public float rotationSpeed;
@@ -81,13 +81,14 @@ public class CharacterMovement : Photon.MonoBehaviour
 
     public void Move()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, downwardsRaycastRange, groundMask))
+        if (physics.onGround)
         {
             movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            movementDirection = transform.TransformDirection(movementDirection);
+            physics.force += movementDirection * Time.deltaTime * currentClass.movementSpeed;
             if (Input.GetButtonDown(jumpInput))
-                rig.velocity += Vector3.up * currentClass.jumpHeight;
+                physics.force += Vector3.up * currentClass.jumpHeight;
         }
-        transform.Translate(movementDirection * Time.deltaTime * currentClass.movementSpeed);
     }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)

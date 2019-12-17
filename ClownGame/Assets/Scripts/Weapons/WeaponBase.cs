@@ -19,7 +19,7 @@ public class WeaponBase : Photon.MonoBehaviour
     public float weaponSwayStrenght;
     public float weaponLerpSpeed;
     public float weaponJumpWeight;
-    public Rigidbody playerRig;
+    public CharacterPhysics playerRig;
     [Header("Reload")]
     public WeaponObjectInformation info;
     public string reloadInput;
@@ -51,7 +51,7 @@ public class WeaponBase : Photon.MonoBehaviour
     public void WeaponSway()
     {
         if (photonView.isMine)
-            weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (playerRig.velocity.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
+            weapon.Translate(new Vector3(-Input.GetAxis("Mouse X"), -Input.GetAxis("Mouse Y") - (playerRig.force.y * weaponJumpWeight)) * weaponSwayStrenght * Time.deltaTime);
         weapon.position = Vector3.Lerp(weapon.position, weapon.parent.position, Time.deltaTime * weaponLerpSpeed);
         weapon.rotation = Quaternion.Lerp(weapon.rotation, weapon.parent.rotation, Time.deltaTime * weaponLerpSpeed);
     }
