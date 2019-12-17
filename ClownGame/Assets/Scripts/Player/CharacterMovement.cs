@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterMovement : Photon.MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class CharacterMovement : Photon.MonoBehaviour
     Vector3 position;
     Quaternion rotation;
     Quaternion camRotation;
+    public Transform displayName;
 
     [PunRPC,HideInInspector]
     public void DoDamage(float damage)
@@ -50,7 +52,10 @@ public class CharacterMovement : Photon.MonoBehaviour
             foreach (GameObject obj in disabledObjects)
                 obj.SetActive(false);
             StartCoroutine(LerpPosition());
+            displayName.GetComponent<Text>().text = photonView.owner.NickName;
         }
+        else
+            displayName.gameObject.SetActive(false);
     }
 
     public IEnumerator LerpPosition()
@@ -71,6 +76,8 @@ public class CharacterMovement : Photon.MonoBehaviour
             Move();
             Rotate();
         }
+        else
+            displayName.LookAt(Camera.main.transform.position);
     }
 
     public void Rotate()

@@ -10,6 +10,7 @@ public class ChatSystem : Photon.MonoBehaviour
     public Transform chatLayout;
     public float chatMessageLifetime;
     public bool continueTyping;
+    public bool openWithEnter;
 
     public void SendMessage()
     {
