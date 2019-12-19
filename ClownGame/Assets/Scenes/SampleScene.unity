@@ -5809,7 +5809,6 @@ MonoBehaviour:
   continueTyping: 1
   openWithEnter: 0
   ingameManager: {fileID: 0}
-  source: {fileID: 1185250902}
 --- !u!114 &1185250900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7625,7 +7624,7 @@ MonoBehaviour:
     type: 3}
   roomsUIObject: {fileID: 1216103626}
   roomUI: {fileID: 491260156}
-  gameScene: Greybox Liting
+  gameScene: Greybox
 --- !u!4 &1454141289
 Transform:
   m_ObjectHideFlags: 0

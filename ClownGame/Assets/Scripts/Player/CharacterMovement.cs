@@ -80,7 +80,7 @@ public class CharacterMovement : Photon.MonoBehaviour
                 Rotate();
             }
         }
-        else
+        else if(Camera.main)
             displayName.LookAt(Camera.main.transform.position);
     }
 
