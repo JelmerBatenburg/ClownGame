@@ -103,7 +103,6 @@ public class BaseEnemy : Photon.MonoBehaviour
 
     public void FindNearestTarget()
     {
-        Debug.Log("Looking");
         GameObject[] players = GameObject.FindGameObjectsWithTag(playerTag);
         currentTarget = null;
         for (int i = 0; i < players.Length; i++)

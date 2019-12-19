@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class ChatSystem : Photon.MonoBehaviour
 {
     public InputField inputField;
@@ -14,13 +13,14 @@ public class ChatSystem : Photon.MonoBehaviour
     private bool enterDelay;
     public Manager ingameManager;
 
+
     public void Update()
     {
         if (openWithEnter && !enterDelay && !inputField.isFocused && Input.GetButtonDown("Submit"))
         {
             inputField.ActivateInputField();
             if (ingameManager && ingameManager.currentPlayer)
-                ingameManager.currentPlayer.GetComponent<CharacterMovement>().allowMovment = false;
+                TogglePlayer(false);
         }
     }
 
@@ -37,13 +37,19 @@ public class ChatSystem : Photon.MonoBehaviour
         }
     }
 
+    public void TogglePlayer(bool toggle)
+    {
+        ingameManager.currentPlayer.GetComponent<CharacterMovement>().allowMovment = toggle;
+        ingameManager.currentPlayer.GetComponent<GrenadeThrow>().allowThrow = toggle;
+    }
+
     public IEnumerator EnterDelay()
     {
         enterDelay = true;
         yield return null;
         enterDelay = false;
         if (ingameManager && ingameManager.currentPlayer)
-            ingameManager.currentPlayer.GetComponent<CharacterMovement>().allowMovment = true;
+            TogglePlayer(true);
     }
 
     [PunRPC,HideInInspector]

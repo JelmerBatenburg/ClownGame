@@ -17,10 +17,11 @@ public class GrenadeThrow : Photon.MonoBehaviour
     public int throwSounds;
     public bool delay;
     public float throwDelay;
+    public bool allowThrow = true;
 
     void Update()
     {
-        if (photonView.isMine && Input.GetButtonDown(grenadeInput) && !delay)
+        if (photonView.isMine && Input.GetButtonDown(grenadeInput) && !delay && allowThrow)
             ThrowGrenade();
     }
 
