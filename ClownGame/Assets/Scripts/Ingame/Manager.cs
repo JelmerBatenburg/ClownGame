@@ -34,7 +34,7 @@ public class Manager : Photon.MonoBehaviour
         foreach (Transform spawnSpot in spawnPoints)
             if (!Physics.CheckSphere(spawnSpot.position, notAllowedSpawnPointRange, playerMask))
             {
-                PhotonNetwork.Instantiate(player, spawnSpot.position, spawnSpot.rotation, 0);
+                currentPlayer = PhotonNetwork.Instantiate(player, spawnSpot.position, spawnSpot.rotation, 0);
                 break;
             }
     }

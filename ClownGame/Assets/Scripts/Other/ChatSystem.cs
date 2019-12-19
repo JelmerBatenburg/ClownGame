@@ -11,6 +11,18 @@ public class ChatSystem : Photon.MonoBehaviour
     public float chatMessageLifetime;
     public bool continueTyping;
     public bool openWithEnter;
+    private bool enterDelay;
+    public Manager ingameManager;
+
+    public void Update()
+    {
+        if (openWithEnter && !enterDelay && !inputField.isFocused && Input.GetButtonDown("Submit"))
+        {
+            inputField.ActivateInputField();
+            if (ingameManager && ingameManager.currentPlayer)
+                ingameManager.currentPlayer.GetComponent<CharacterMovement>().allowMovment = false;
+        }
+    }
 
     public void SendMessage()
     {
@@ -20,7 +32,18 @@ public class ChatSystem : Photon.MonoBehaviour
             inputField.text = "";
             if (continueTyping)
                 inputField.ActivateInputField();
+            else if (openWithEnter)
+                StartCoroutine(EnterDelay());
         }
+    }
+
+    public IEnumerator EnterDelay()
+    {
+        enterDelay = true;
+        yield return null;
+        enterDelay = false;
+        if (ingameManager && ingameManager.currentPlayer)
+            ingameManager.currentPlayer.GetComponent<CharacterMovement>().allowMovment = true;
     }
 
     [PunRPC,HideInInspector]

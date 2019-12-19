@@ -9,6 +9,7 @@ public class CharacterMovement : Photon.MonoBehaviour
     public ClassScriptableObject currentClass;
     Vector3 movementDirection;
     public float health;
+    public bool allowMovment = true;
     [Header("GroundDetection")]
     public string jumpInput;
     public float downwardsRaycastRange;
@@ -73,8 +74,11 @@ public class CharacterMovement : Photon.MonoBehaviour
     {
         if (photonView.isMine)
         {
-            Move();
-            Rotate();
+            if (allowMovment)
+            {
+                Move();
+                Rotate();
+            }
         }
         else
             displayName.LookAt(Camera.main.transform.position);
