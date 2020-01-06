@@ -55,4 +55,5 @@ MonoBehaviour:
   - SetInformation
   - PlaySound
   - MessageRecieve
+  - DisplayInfo
   DisableAutoOpenWizard: 1
