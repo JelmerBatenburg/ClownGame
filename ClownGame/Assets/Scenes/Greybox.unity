@@ -5420,11 +5420,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - spawnAmount: 200
+  - spawnAmount: 30
     area: 0
-  - spawnAmount: 200
+  - spawnAmount: 45
     area: 0
-  - spawnAmount: 200
+  - spawnAmount: 50
     area: 0
   areas:
   - spawnpoints:
@@ -5434,10 +5434,9 @@ MonoBehaviour:
     center: {x: 0, y: 0, z: 35.5}
     size: 34.59
     maxEnemies: 50
-  currentWave: 0
-  waveHordeSizeMax: 7
+  waveHordeSize: {x: 5, y: 8}
   spawnDelay: 0.2
-  hordeDelay: 0.6
+  hordeDelay: 0.4
   waveDelay: 2
   enemy: GoreEnemy
 --- !u!4 &563160095

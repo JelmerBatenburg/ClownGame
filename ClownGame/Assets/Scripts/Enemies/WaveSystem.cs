@@ -6,9 +6,7 @@ public class WaveSystem : Photon.MonoBehaviour
 {
     public WaveInformation[] waves;
     public AreaInformation[] areas;
-    public List<GameObject> currentlySpawned = new List<GameObject>();
-    public int currentWave;
-    public int waveHordeSizeMax;
+    public Vector2Int waveHordeSize;
     public float spawnDelay;
     public float hordeDelay;
     public float waveDelay;
@@ -22,56 +20,53 @@ public class WaveSystem : Photon.MonoBehaviour
 
     public IEnumerator SpawnEnemies()
     {
-        int spawned = 0;
-        while (spawned < waves[currentWave].spawnAmount)
+        for (int currentWave = 0; currentWave < waves.Length; currentWave++)
         {
-            for (int enemyIndex = 0; enemyIndex < currentlySpawned.Count; enemyIndex++)
-                        if(currentlySpawned[enemyIndex] == null)
-                        {
-                            currentlySpawned.RemoveAt(enemyIndex);
-                            enemyIndex--;
-                        }
-
-            int spawnAmount = Random.Range(0, waveHordeSizeMax);
-            if (spawned + spawnAmount >= waves[currentWave].spawnAmount)
-                spawnAmount = waves[currentWave].spawnAmount - spawned;
-
+            List<GameObject> currentlySpawned = new List<GameObject>();
             AreaInformation area = areas[waves[currentWave].area];
-            int spawner = Random.Range(0, area.spawnpoints.Length);
-            for (int i = 0; i < spawnAmount; i++)
+            int currentspawner = Random.Range(0, area.spawnpoints.Length);
+            int spawned = 0;
+            int spawnAmount = Random.Range(waveHordeSize.x,waveHordeSize.y);
+            for (int i = 0; i < waves[currentWave].spawnAmount; i++)
             {
-                while (currentlySpawned.Count >= area.maxEnemies)
+                while(currentlySpawned.Count >= areas[waves[currentWave].area].maxEnemies)
                 {
-                    for (int enemyIndex = 0; enemyIndex < currentlySpawned.Count; enemyIndex++)
-                        if(currentlySpawned[enemyIndex] == null)
+                    for (int enemy = 0; enemy < currentlySpawned.Count; enemy++)
+                        if(currentlySpawned[enemy] == null)
                         {
-                            currentlySpawned.RemoveAt(enemyIndex);
-                            enemyIndex--;
+                            currentlySpawned.RemoveAt(enemy);
+                            enemy--;
                         }
-
                     yield return null;
                 }
-                currentlySpawned.Add(PhotonNetwork.Instantiate(enemy, area.spawnpoints[spawner].position, Quaternion.identity, 0));
+
+                if(spawned >= spawnAmount)
+                {
+                    currentspawner = Random.Range(0, area.spawnpoints.Length);
+                    spawned = 0;
+                    spawnAmount = Random.Range(waveHordeSize.x, waveHordeSize.y);
+                    yield return new WaitForSeconds(hordeDelay);
+                }
+
+                GameObject g = PhotonNetwork.Instantiate(enemy, area.spawnpoints[currentspawner].position, Quaternion.identity, 0);
+                currentlySpawned.Add(g);
                 spawned++;
                 yield return new WaitForSeconds(spawnDelay);
             }
-            yield return new WaitForSeconds(hordeDelay);
-        }
-        while(currentlySpawned.Count > 0)
-        {
-            for (int enemyIndex = 0; enemyIndex < currentlySpawned.Count; enemyIndex++)
-                if (currentlySpawned[enemyIndex] == null)
-                {
-                    currentlySpawned.RemoveAt(enemyIndex);
-                    enemyIndex--;
-                }
 
-            yield return null;
+            while(currentlySpawned.Count > 0)
+            {
+                for (int enemy = 0; enemy < currentlySpawned.Count; enemy++)
+                    if (currentlySpawned[enemy] == null)
+                    {
+                        currentlySpawned.RemoveAt(enemy);
+                        enemy--;
+                    }
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(waveDelay);
         }
-        Debug.Log("NextWave");
-        yield return new WaitForSeconds(waveDelay);
-        currentWave++;
-        StartCoroutine(SpawnEnemies());
     }
 
     public void OnDrawGizmos()
